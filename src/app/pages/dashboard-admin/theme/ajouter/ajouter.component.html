@@ -1,0 +1,35 @@
+<button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#ajoutThemeModal">
+  Ajouter un thème
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="ajoutThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ajoutThemeModalLabel">Ajouter un thème</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Nom du thème</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nom du thème" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Description du thème</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du thème"></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer thème</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

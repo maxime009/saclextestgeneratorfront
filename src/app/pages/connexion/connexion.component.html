@@ -1,0 +1,40 @@
+<div>
+  <h3 class="text-white text-center titre">
+  Bienvenue sur SACLEX TEST GENERATOR
+  </h3>
+
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="card center col-lg-6 col-sm-12">
+      <div class="card-body">
+        <h4 class="text-center">Se connecter</h4>
+        <h6 class="text-center">Nouvel utilisateur? <a href="" routerLink="/inscription">S'inscrire</a></h6>
+        <form name="form" (ngSubmit)="f.form.valid && login1()" #f="ngForm" novalidate>
+          <div class="form-group">
+            <label for="login">Login</label>
+            <input type="text" class="form-control" id="login"
+                   placeholder="Login" name="login" [(ngModel)]="model.login"
+                   #login="ngModel" required>
+            <div *ngIf="f.submitted
+          && !login.valid">Username is required</div>
+          </div>
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control"
+                   id="password" placeholder="Mot de passe"
+                  name="password" [(ngModel)]="model.password"
+                   #password="ngModel" required  >
+            <div *ngIf="f.submitted
+          && !password.valid">Password is required</div>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Se souvenir de moi
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Connexion</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

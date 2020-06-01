@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@import url(../node_modules/bootstrap/dist/css/bootstrap.css);
+@import url(../node_modules/font-awesome/css/font-awesome.css);
+/*
+@import url(assets/css/demo.css);
+@import url(assets/css/gsdk-bootstrap-wizard.css);
+*/
+
+/*.bac{
+  !*background-image: linear-gradient(#6dd5fa ,#ffffff);*!
+  background-image: url(assets/image/back1.png);
+  background-repeat: no-repeat;
+  background-size: auto;
+}*/
+
+/*body{
+  height: 100%;
+  background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%);
+  background-repeat: no-repeat;
+
+}*/
+.bac {
+  background: url(assets/image/back1.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

@@ -1,0 +1,72 @@
+
+
+<div class="row" style="margin-bottom: 10px">
+  <div class="col-3"></div>
+  <div class="col-3">
+    <button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#modifierThemeModal">
+      Modifier un thème
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modifierThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modifierThemeModalLabel">Modifier un thème</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Nom du thème</label>
+              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nom du thème" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Description du thème</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du thème"></textarea>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer thème</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<div class="col-3"></div>
+  <div class="col-3">
+    <button type="button" class="btn btn-danger bordure" data-toggle="modal" data-target="#supprimerThemeModal">
+      Supprimer
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="supprimerThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="supprimerThemeModalLabel">Modifier un thème</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            Voulez vous vraiment suppirmer ce thème?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
+            <button type="submit" class="btn btn-danger">OUI</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -26,7 +26,18 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/jquery/dist/jquery.slim.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+              "./node_modules/bootstrap/js/dist/tab.js",
+              "src/assets/js/gsdk-bootstrap-wizard.js",
+              "src/assets/js/jquery.bootstrap.wizard.js",
+              "src/assets/js/jquery.validate.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -119,6 +130,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "STG"
+    }
+  },
+  "defaultProject": "STG",
+  "cli": {
+    "analytics": false
+  }
 }
