@@ -1,10 +1,10 @@
 import {Utilisateur} from './utilisateur';
 
 export interface Theme {
-  id: string;
+  id_theme: number;
   libelle: string;
   description: string;
   dateCreation: string;
   dateModification: string;
-  utilisateur: string;
+  utilisateur: Utilisateur;
 }

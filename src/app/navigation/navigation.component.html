@@ -1,14 +1,63 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg bg-light navbar-light blue fix">
   <a class="navbar-brand" href="#">
-    <i class="fa fa-sticky-note text-warning"></i>
-    <span class="text-warning"> noteit</span>
-  </a>
+    <img src="../../assets/image/logo.jpeg" class="petitlogo" alt="">
+  </a>{{moi.role}}{{moi.login}}
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" >
-    <span class="navbarr-toggler-icon"></span>
+    <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
+  <div class="collapse navbar-collapse navbar-right float-right" id="navbarColor01">
+
+    <ul class="navbar-nav">
+        <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/">Accueil</a>
+        </li>
+        <!--<li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/admin" *ngIf="isLoggedIn() && moi.role == rolAD">Admin</a>
+        </li>
+      <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/responsable" *ngIf="isLoggedIn() && moi.role == rolR">Responsable</a>
+        </li>
+      <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/apprenant" *ngIf="isLoggedIn() && moi.role == rolA">Apprenant</a>
+        </li>-->
+      <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/admin">Admin</a>
+        </li>
+      <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/responsable">Responsable</a>
+        </li>
+      <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/apprenant">Apprenant</a>
+        </li>
+      <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link" routerLink="/responsableTheme">Responsable Theme</a>
+        </li>
+      <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link btn-primary btn" routerLink="/connexion" style="color: white"> Connexion
+            <i class="fa fa-sign-in "></i>
+          </a>
+        </li>
+        <li class="nav-item" style="margin-left: 12px">
+          <a class="nav-link btn-primary btn" routerLink="/inscription" style="color: white"> Inscription
+            <i class="fa fa-user"></i>
+          </a>
+        </li>
+      </ul>
+  </div>
+</nav>
+
+
+
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar w/ text</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <span class="navbar-text">
+      <div class="collapse navbar-collapse navbar-right" id="navbarColor01">
+        <ul class="navbar-nav">
       <li class="nav-item active">
         <a class="nav-link" routerLink="/">Accueil</a>
       </li>
@@ -22,6 +71,8 @@
         <a class="nav-link" routerLink="/inscription">Inscription</a>
       </li>
     </ul>
+      </div>
+    </span>
   </div>
-</nav>
+</nav>-->
 

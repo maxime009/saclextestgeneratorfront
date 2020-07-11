@@ -1,47 +1,153 @@
-<div>
-  <h3 class="text-white text-center titre">
-    Bienvenue sur SACLEX TEST GENERATOR
-  </h3>
+<div class="container">
+  <div>
+    <h3 class="text-white text-center titre">
+      Bienvenue sur SACLEX TEST GENERATOR
+    </h3>
 
-  <div class="row">
-    <div class="col-lg-3"></div>
-    <div class="card center col-lg-6 col-md-12 col-sm-12">
-      <div class="card-body">
-        <h4 class="text-center">S'inscrire</h4>
-        <h6 class="text-center">Vous avez déjà un compte? <a href="" routerLink="/connexion">Se connecter</a></h6><br>
-        <form>
-          <div class="row">
-            <div class="form-group col-lg-6 col-md-6 col-sm-12">
-              <label for="nom">Nom</label>
-              <input type="text" class="form-control" id="nom" placeholder="Nom du responsable" required>
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="card center col-lg-6 col-md-12 col-sm-12">
+        <div class="card-body">
+          <h4 class="text-center">S'inscrire</h4>
+          <h6 class="text-center">Vous avez déjà un compte? <a href="" routerLink="/connexion">Se connecter</a></h6><br>
+          <form #fins="ngForm" name="form" (submit)="fins.form.valid && saveUser()" novalidate action="">
+            <div class="file-field">
+              <!--<a class="btn-floating peach-gradient mt-0 float-left">
+                <i class="fas fa-paperclip" aria-hidden="true"></i>
+                <input type="file"
+                       name="pic"
+                       [(ngModel)]="pic"
+                       #pic="ngModel"
+                       [ngClass]="{'is-invalid':fins.submitted && pic.invalid}">
+              </a>-->
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Upload your file">
+              </div>
             </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-12">
-              <label for="prenom">Prénom</label>
-              <input type="text" class="form-control" id="prenom" placeholder="Prénom du responsable" required>
+            <div class="row">
+              <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <label for="nom">Nom</label>
+                <input type="text"
+                       class="form-control"
+                       id="nom"
+                       placeholder="Nom"
+                       name="nom"
+                       [(ngModel)]="userModel.nom"
+                       #nom="ngModel"
+                       [ngClass]="{'is-invalid':fins.submitted && nom.invalid}"
+                       required>
+                <div *ngIf="fins.submitted && nom.invalid" class="invalid-input">
+                  <div *ngIf="nom.errors?.required">Le nom est invalid</div>
+                </div>
+              </div>
+              <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <label for="prenom">Prénom</label>
+                <input type="text"
+                       class="form-control"
+                       id="prenom"
+                       placeholder="Prénom"
+                       name="prenom"
+                       [(ngModel)]="userModel.prenom"
+                       #prenom="ngModel"
+                       [ngClass]="{'is-invalid':fins.submitted && prenom.invalid}"
+                       required>
+                <div *ngIf="fins.submitted && prenom.invalid" class="invalid-input">
+                  <div *ngIf="prenom.errors?.required">Le prénom est invalid</div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-lg-6 col-md-6 col-sm-12">
-              <label for="exampleInputEmail1">Adresse mail</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                     placeholder="Adresse mail" required>
+            <div class="row">
+              <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <label for="email">Adresse mail</label>
+                <input type="email"
+                       class="form-control"
+                       id="email"
+                       aria-describedby="emailHelp"
+                       placeholder="Adresse mail"
+                       name="email"
+                       [(ngModel)]="userModel.email"
+                       #email="ngModel"
+                       [ngClass]="{'is-invalid':fins.submitted && email.invalid}"
+                       required>
+                <div *ngIf="fins.submitted && email.invalid" class="invalid-input">
+                  <div *ngIf="email.errors?.required">Le prénom est invalid</div>
+                </div>
+              </div>
+              <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <label for="password">Mot de passe</label>
+                <input type="password"
+                       class="form-control"
+                       id="password"
+                       placeholder="Mot de passe"
+                       name="password"
+                       [(ngModel)]="userModel.password"
+                       #password="ngModel"
+                       [ngClass]="{'is-invalid':fins.submitted && password.invalid}"
+                       required>
+                <div *ngIf="fins.submitted && password.invalid" class="invalid-input">
+                  <div *ngIf="password.errors?.required">Le mot de passe est invalid</div>
+                </div>
+              </div>
             </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-12">
-              <label for="exampleInputPassword1">Mot de passe</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe" required>
+            <div class="row">
+              <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="dateNaissance">Date de naissance</label>
+                  <div class="input-group">
+
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           id="dateNaissance"
+                           [(ngModel)]="this.model"
+                           ngbDatepicker
+                           #d="ngbDatepicker"
+                           name="dateNaissance"
+                           required>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
+                        class="fa fa-calendar"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                <div>Sexe</div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios"
+                         [(ngModel)]="userModel.sexe" [value]="sexem">
+                  <label class="form-check-label" for="materialUnchecked">masculin</label>
+                </div>
+
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="materialChecked" name="materialExampleRadios"
+                         [(ngModel)]="userModel.sexe" [value]="sexef">
+                  <label class="form-check-label" for="materialChecked">féminin</label>
+                </div>
+              </div>
+              <!--<div class="form-group col-lg-6 col-md-6 col-sm-12">
+                &lt;!&ndash; Group of default radios - option 1 &ndash;&gt;
+                <div class="custom-control custom-radio">
+                  <input type="radio"
+                         class="custom-control-input"
+                         id="sexe"
+                         placeholder="Prénom du responsable"
+                         name="sexe"
+                         [(ngModel)]="userModel.sexe"
+                         #prenom="ngModel"
+                         [ngClass]="{'is-invalid':fins.submitted && prenom.invalid}"
+                         required>
+                  <label class="custom-control-label" for="sexe">masculin</label>
+                </div>
+  
+                &lt;!&ndash; Group of default radios - option 2 &ndash;&gt;
+                <div class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios">
+                  <label class="custom-control-label" for="defaultGroupExample2">féminin</label>
+                </div>
+              </div>-->
             </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description du Responsable</label>
-            <textarea required class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du responsable"></textarea>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Se souvenir de moi
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary">Inscription</button>
-        </form>
+            <button type="submit" class="btn btn-primary">Inscription</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>

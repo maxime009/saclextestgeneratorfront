@@ -20,8 +20,28 @@ import { ConModalComponent } from './pages/con-modal/con-modal.component';
 import { InsModalComponent } from './pages/ins-modal/ins-modal.component';
 import { AccueilComponent } from './pages/accueil/accueil.component';
 import { UnThemeComponent } from './pages/dashboard-admin/theme/ajouter/un-theme/un-theme.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {DatePipe} from "@angular/common";
+import {NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
+import { DashboardResponsableComponent } from './pages/dashboard-responsable/dashboard-responsable.component';
+import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
+//import {CKEditorModule} from "ckeditor4-angular";
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { QCMComponent } from './pages/dashboard-responsable/qcm/qcm.component';
+import { ChoixExclusifComponent } from './pages/dashboard-responsable/choix-exclusif/choix-exclusif.component';
+import { QuestionTrouComponent } from './pages/dashboard-responsable/question-trou/question-trou.component';
+import { DashboardAprenantComponent } from './pages/dashboard-aprenant/dashboard-aprenant.component';
+import { DashboardResponsableCategorieComponent } from './pages/dashboard-responsable-theöe/dashboard-responsable-categorie.component';
+import { DashboardResponsableThemeComponent } from './pages/dashboard-responsable-theme/dashboard-responsable-theme.component';
+import { ThemeResponsableComponent } from './pages/dashboard-responsable-theme/theme-responsable/theme-responsable.component';
+import { ListThemeParUserComponent } from './pages/dashboard-responsable-theme/list-theme-par-user/list-theme-par-user.component';
+import { DetailThemeComponent } from './pages/dashboard-responsable-theme/theme-responsable/detail-theme/detail-theme.component';
+import { ListCategorieComponent } from './pages/dashboard-responsable-theme/list-categorie/list-categorie.component';
+import { DisplayQCMComponent } from './pages/dashboard-aprenant/display-qcm/display-qcm.component';
+
+
 
 const appRoutes: Routes = [
   {
@@ -39,6 +59,26 @@ const appRoutes: Routes = [
   {
     path: '',
     component: AccueilComponent
+  },
+  {
+    path: 'theme',
+    component: ThemeComponent
+  },
+  {
+    path: 'responsable',
+    component: DashboardResponsableComponent
+  },
+  {
+    path: 'apprenant',
+    component: DashboardAprenantComponent
+  },
+  {
+    path: 'responsableCategorie',
+    component: DashboardResponsableCategorieComponent
+  },
+  {
+    path: 'responsableTheme',
+    component: DashboardResponsableThemeComponent
   }
 ];
 
@@ -60,16 +100,32 @@ const appRoutes: Routes = [
     ConModalComponent,
     InsModalComponent,
     AccueilComponent,
-    UnThemeComponent
+    UnThemeComponent,
+    DashboardResponsableComponent,
+    QCMComponent,
+    ChoixExclusifComponent,
+    QuestionTrouComponent,
+    DashboardAprenantComponent,
+    DashboardResponsableCategorieComponent,
+    DashboardResponsableThemeComponent,
+    ThemeResponsableComponent,
+    ListThemeParUserComponent,
+    DetailThemeComponent,
+    ListCategorieComponent,
+    DisplayQCMComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, {enableTracing: true}),
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RichTextEditorModule,
+    AngularEditorModule,
+    NgbModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

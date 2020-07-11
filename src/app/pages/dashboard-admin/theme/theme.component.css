@@ -10,3 +10,7 @@
 .bordure{
   border: solid 0.5px white;
 }
+
+.invalid-input{
+  color: red;
+}

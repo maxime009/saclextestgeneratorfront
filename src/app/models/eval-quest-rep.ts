@@ -5,6 +5,6 @@ export class EvalQuestRep {
   id: number;
   eval: Evaluation;
   quest: Question;
-  reponse: number;
+  //reponse: number;
  // statut: Evaluation.sta
 }

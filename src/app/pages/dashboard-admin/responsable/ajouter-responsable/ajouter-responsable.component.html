@@ -12,25 +12,54 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
+      <form #ff="ngForm" name="form" (submit)="ff.form.valid && saveResponsable()" novalidate action="">
         <div class="modal-body">
 
           <div class="form-group">
             <label for="nom">Nom</label>
-            <input type="text" class="form-control" id="nom" placeholder="Nom du responsable" required>
+            <input type="text" class="form-control" id="nom" placeholder="Nom du responsable"
+                   name="prenom"
+                   [(ngModel)]="responsableModel.nom"
+                   #nom="ngModel"
+                   [ngClass]="{'is-invalid':ff.submitted && nom.invalid}"
+                   required>
+            <div *ngIf="ff.submitted && nom.invalid" class="invalid-input">
+              <div *ngIf="nom.errors?.required">Le nom est invalid</div>
+            </div>
           </div>
           <div class="form-group">
             <label for="prenom">Prénom</label>
-            <input type="text" class="form-control" id="prenom" placeholder="Prénom du responsable" required>
+            <input type="text" class="form-control" id="prenom" placeholder="Prénom du responsable"
+                   name="prenom"
+                   [(ngModel)]="responsableModel.prenom"
+                   #prenom="ngModel"
+                   [ngClass]="{'is-invalid':ff.submitted && prenom.invalid}"
+                   required>
+            <div *ngIf="ff.submitted && prenom.invalid" class="invalid-input">
+              <div *ngIf="prenom.errors?.required">Le prénom est invalid</div>
+            </div>
           </div>
           <div class="form-group">
             <label for="email">Adresse mail</label>
             <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                   placeholder="Adresse email du responsable">
+                   placeholder="Adresse email du responsable"
+                   name="email"
+                   [(ngModel)]="responsableModel.email"
+                   #email="ngModel"
+                   [ngClass]="{'is-invalid':ff.submitted && email.invalid}"
+                   required>
+            <div *ngIf="ff.submitted && email.invalid" class="invalid-input">
+              <div *ngIf="email.errors?.required">L'adresse mail est invalid</div>
+            </div>
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Description du Responsable</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du Responsable"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du Responsable"
+                      name="description"
+                      [(ngModel)]="responsableModel.description"
+                      #description="ngModel"
+                      [ngClass]="{'is-invalid':ff.submitted && description.invalid}"
+                      required></textarea>
           </div>
         </div>
         <div class="modal-footer">

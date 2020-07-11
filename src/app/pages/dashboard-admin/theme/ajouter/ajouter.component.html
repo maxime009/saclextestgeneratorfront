@@ -1,35 +1,71 @@
-<button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#ajoutThemeModal">
-  Ajouter un thème
-</button>
+<div class="row">
+  <div class="col-lg-9 col-md-7 col-sm-6"></div>
+  <div class="col-lg-3 col-md-5 col-sm-6 text-right" style="margin-bottom: 10px">
+    <button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#ajoutThemeModal">
+      Ajouter un thème
+    </button>
 
-<!-- Modal -->
-<div class="modal fade" id="ajoutThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ajoutThemeModalLabel">Ajouter un thème</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <!-- Modal -->
+    <div class="modal fade" id="ajoutThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ajoutThemeModalLabel">Ajouter un thème</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form #ff="ngForm" name="form" (submit)="ff.form.valid && saveTheme()" novalidate action="">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="libelle">Nom du thème</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Nom du thème"
+                       id="libelle"
+                       name="libelle"
+                       [(ngModel)]="themeModel.libelle"
+                       #libelle = "ngModel"
+                       [ngClass]="{'is-invalid': ff.submitted && libelle.invalid}"
+                       required/>
+               <div *ngIf="ff.submitted && libelle.invalid" class="invalid-input">
+                  <div *ngIf="libelle.errors?.required">Le libelle est invalid</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="description">Description du thème</label>
+                <textarea
+                  class="form-control"
+                  id="description" rows="3"
+                  name="libelle"
+                  [(ngModel)]="themeModel.description"
+                  #description = "ngModel"
+                  [ngClass]="{'is-invalid': ff.submitted && description.invalid}"
+                  required></textarea>
+                <div *ngIf="ff.submitted && description.invalid" class="invalid-input">
+                  <div *ngIf="description.errors?.required">La description est invalid</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="responsableTheme"></label>
+                <select name="responsableTheme" id="responsableTheme" [(ngModel)]="themeModel.utilisateur" >
+                  <option value="" *ngFor="let respo of responsablesThemes" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              <button type="submit" class="btn btn-primary">Enregistrer thème</button>
+            </div>
+          </form>
+
+        </div>
       </div>
-      <form>
-        <div class="modal-body">
-
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Nom du thème</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nom du thème" required>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description du thème</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du thème"></textarea>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-primary">Enregistrer thème</button>
-        </div>
-      </form>
     </div>
+
+    <!--
+        <app-ajouter></app-ajouter>
+    -->
   </div>
 </div>
+

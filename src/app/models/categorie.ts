@@ -1,10 +1,13 @@
 import {Theme} from './theme';
+import {Utilisateur} from "./utilisateur";
+import {RespCat} from './resp-cat';
 
 export interface Categorie {
   idCategorie: number;
   libelle: string;
-  desciption: string;
+  description: string;
   theme: Theme;
-  dateCreation: Date;
-  dateModification: Date;
+  respCat: Utilisateur;
+  dateCreation: any;
+  dateModification: any;
 }

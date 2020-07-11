@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Theme} from '../../../models/theme';
+import {Role} from '../../../models/Role';
 import {StgService} from '../../../appl/stg.service';
 import {Utilisateur} from '../../../models/utilisateur';
+import {Categorie} from '../../../models/categorie';
+import {FormsModule} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ThemeService} from "../../../appl/theme.service";
+import {CategorieService} from "../../../appl/categorie.service";
+import {UtilisateursService} from "../../../appl/utilisateurs.service";
 
 @Component({
   selector: 'app-theme',
@@ -9,73 +16,188 @@ import {Utilisateur} from '../../../models/utilisateur';
   styleUrls: ['./theme.component.css']
 })
 export class ThemeComponent implements OnInit {
+  admin = Role.ADMINISTRATEUR;
+  moi: Utilisateur;
 
-  themes: Theme[] = [];
-  users: Utilisateur[];
+  theme: Theme = {
+    id_theme: null,
+    libelle: '',
+    description: '',
+    dateCreation: '',
+    dateModification: '',
+    utilisateur : this.moi
+  };
+  t: Theme[];
+  tt: Theme[];
+  themeChoisi: Theme = this.theme;
   user: Utilisateur;
-  selectedTheme: Theme;
-  them: Theme;
-  u: any;
-  c: any;
-  r: any;
-  re: any;
+  question: any;
+  carte: any;
+  categorie: any;
+  themeModel: Theme = this.theme;
+  themeModif: Theme = this.theme;
 
-  constructor(private stgService: StgService) { }
+  public categ: Categorie = {
+    idCategorie: null,
+    libelle: '',
+    description: '',
+    theme: null,
+    dateCreation: null,
+    dateModification: null,
+    respCat: null
+  };
+  public responsablesTheme: Utilisateur[] = new Array(0);
+  public responsablesCategorie: Utilisateur[] = new Array(0);
+
+  constructor(
+    private themeService: ThemeService,
+    private router: Router,
+    private stg: StgService,
+    private cat: CategorieService,
+    private utilisateursService: UtilisateursService) { }
 
   ngOnInit(): void {
-    this.getAllThemes();
+    this.getThemes();
+    if ( localStorage.getItem('id') != null){
+      this.getConnectedUser();
+    }
+    this.getResponsableC();
+    this.getResponsableT();
   }
 
-  public getAllThemes(){
-    this.stgService.getAllThemes().subscribe(
+  public getThemes(){
+    this.themeService.getAllThemes().subscribe(
       res => {
-        this.themes = res;
+        this.t = res;
+        if (this.t != null){
+          this.themeChoisi = this.t[0];
+          this.themeModel = this.t[0];
+          this.themeModif = this.t[0];
+          this.user = this.t[0].utilisateur;
+          /*this.getQuestion(this.t[0].id_theme);
+          this.getCarte(this.t[0].id_theme);
+          this.getCategorie(this.t[0].id_theme);*/
+        }
       },
       err => {
-        alert('Une erreur est survenue');
+        alert('error');
+      }
+    );
+  }
+  getConnectedUser(): void{
+    const y: number = + localStorage.getItem('id');
+    this.stg.getUnUserService(y).subscribe(
+      res => {
+        this.moi = res;
+      },
+      err => {
+        alert('error gettx user');
       }
     );
   }
 
-  getAllUsers(){
-    this.stgService.getAllUser().subscribe(
+  choisirTheme(th: Theme) {
+    this.themeChoisi = th;
+    this.themeModif = this.themeChoisi;
+    /*this.getQuestion(th.id_theme);
+    this.getCarte(th.id_theme);
+    this.getCategorie(th.id_theme);*/
+    this.user = th.utilisateur;
+  }
+
+  public getQuestion(idTheme: number){
+    this.themeService.getnbQuestParTheme(idTheme).subscribe(
       res => {
-        this.users = res;
+        this.question = res;
       },
       err => {
-        alert('Une erreur est survnue');
+        alert('error question');
       }
     );
   }
 
-  /*getUnUser(utilisateurId){
-    this.stgService.getUnUserService(utilisateurId).subscribe(
+  public getCarte(idTheme: number){
+    this.themeService.getnbCarteParTheme(idTheme).subscribe(
       res => {
-        this.user = res;
+        this.carte = res;
       },
       err => {
-        alert('Une erreur est survenue');
+        alert('error question' +
+          '');
       }
     );
-  }*/
-
-
-  selectTheme(theme: Theme) {
-    this.selectedTheme = theme;
-    this.u = this.selectedTheme.utilisateur;
-    this.r = this.nbrCatTheme(theme.id);
-    this.re = theme;
-    // TODO
   }
 
-  nbrCatTheme(id: string): any{
-    this.stgService.nbCategorieByTheme(id).subscribe(
+  public getCategorie(idTheme: number){
+    this.themeService.getnbCategorieParTheme(idTheme).subscribe(
       res => {
-        this.c = res;
+        this.categorie = res;
       },
       err => {
-        alert('Une erreur est survenue');
+        alert('error question');
+      }
+    );
+  }
+
+  modifierTheme() {
+    const token = localStorage.getItem('token');
+    this.themeService.modThemme(this.themeModif, token).subscribe(
+      res => {
+        location.reload();
+      },
+      err => {
+        alert('error saving theme');
+      }
+    );
+  }
+
+  supprimerTheme(theme: Theme) {
+    const token = localStorage.getItem('token');
+    this.themeService.supThemme(theme.id_theme, token).subscribe(
+      res => {
+        location.reload();
+      },
+      err => {
+        alert('An error occurred while deleting the theme');
+      }
+      );
+  }
+
+  ajouterCategorie() {
+    const token = localStorage.getItem('token');
+    this.categ.respCat = this.moi;
+    this.cat.addCategorie(this.categ, token).subscribe(
+      res => {
+        location.reload();
+      },
+      err => {
+        alert('La catégorie pas ajouté');
+      }
+    );
+  }
+
+  getResponsableT(){
+    const token = localStorage.getItem('token');
+    this.utilisateursService.getRespoTheme(token).subscribe(
+      res => {
+        this.responsablesTheme = res;
+      },
+      err => {
+        alert('error gettx respos theme');
+      }
+    );
+  }
+  getResponsableC(){
+    const token = localStorage.getItem('token');
+    this.utilisateursService.getRespoCateg().subscribe(
+      res => {
+        this.responsablesCategorie = res;
+      },
+      err => {
+        alert('error gettx respos categ');
       }
     );
   }
 }
+
+

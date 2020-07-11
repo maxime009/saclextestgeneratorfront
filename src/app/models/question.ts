@@ -1,5 +1,6 @@
 import {TypeQuestion} from './type-question';
 import {Categorie} from './categorie';
+import {Reponse} from "./reponse";
 
 export interface Question {
   idQuestion: number;
@@ -10,4 +11,5 @@ export interface Question {
   categorie: Categorie;
   dateCreation: Date;
   dateModification: Date;
+  reponses: Reponse[];
 }

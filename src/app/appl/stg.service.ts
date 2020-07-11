@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import {UtilisateurModel} from '../pages/connexion/connexion.component';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {LoginViewModel} from '../pages/connexion/connexion.component';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Utilisateur} from "../models/utilisateur";
-import {Theme} from "../models/theme";
-import {Categorie} from "../models/categorie";
+import {Utilisateur} from '../models/utilisateur';
+import {Theme} from '../models/theme';
+import {Categorie} from '../models/categorie';
+import {Question} from '../models/question';
+import {Reponse} from '../models/reponse';
 
 
 
@@ -13,42 +16,100 @@ import {Categorie} from "../models/categorie";
 })
 export class StgService {
 
-  public base = 'http://localhost:8086/';
-  private listTheme = this.base + 'listerTheme';
-  private connexion = this.base + 'login';
-  private creatAccount = this.base + 'all/creerUtilisateur';
+  public base = 'http://localhost:8088/';
+  //private listTheme = this.base + 'listerTheme';
+  private conne = this.base + 'login';
+    //this.base + 'login';
+  private addRespo = this.base + 'admin/creerUtilisateur';
   private listUser = this.base + 'admin/listerUtilisateur';
   private deleteUser = this.base + 'admin/supprimerUtilisateur/';
-  private modofyAccount = this.base + 'modifierUtilisateur';//probleme avec cette fxn l'id
-  private unUser = this.base + 'UnUtilisateur/';
-  private listCategorieParTheme = this.base + 'listerCategoriesparTheme';
-  private compteCategorieParTheme = this.base + 'countCategoriesparTheme';
-
+  private modofyAccount = this.base + 'modifierUtilisateur'; // probleme avec cette fxn l'id
+  private unUser = this.base + 'utilisateur/UnUtilisateur/';
+  /*private listCategorieParTheme = this.base + 'listerCategoriesparTheme';
+  private nbCategorieParTheme = this.base + 'categoriesParTheme/';
+  private nbQuestParTheme = this.base + 'questionsParTheme/';
+  private nbCarteParTheme = this.base + 'cartesParTheme/';
+  private saveTheme = this.base + 'admin/creerTheme';
+  private modifierTheme = this.base + 'admin/modifierTheme';*/
+  // private saveUtilisateur = this.base + 'all/creerUtilisateur';
+  // private saveUtilisateur = 'http://localhost:8086/all/creerUtilisateur';
+  private saveApprenant = this.base + 'all/creerApprenant';
+  //private delTheme = this.base + 'admin/supprimerTheme/';
+  // TODO create method to save responsable
+  private listRespo = this.base + '';
+  // TODO create method to list responsable && call on html in *ngFor && charge it also on theme for addix theme
+  // TODO FAIRE LES TOFS DES EVALUATIONS
+  private addQuest = this.base + 'question/creerQuestion';
+  private modQuest = this.base + 'question/modifierQuestion';
+  private addRep = this.base + 'reponse/creerReponse';
+  private modRep = this.base + 'reponse/modifierReponse';
+  private addlistRep = this.base + 'reponse/savereponses';
+  private addCat = this.base + 'responsable/creerCategorie';
+  private listRep = this.base + 'question/listerReponses/';
+  private yo: any;
+  public moi: Utilisateur;
 
   constructor(private http: HttpClient) { }
+
+  connec(log: LoginViewModel): Observable<any>{
+    return  this.http.post<Utilisateur>(this.conne, log, {observe: 'response'});
+  }
+
+  addQuestion(quest: Question): Observable<Question>{
+    return this.http.post<Question>(this.addQuest, quest);
+  }
+
+  modifQuestion(quest: Question): Observable<Question>{
+    return this.http.put<Question>(this.modQuest, quest);
+  }
+
+  addRepons(rep: Reponse): Observable<Reponse>{
+    return this.http.post<Reponse>(this.addRep, rep);
+  }
+
+  addListRepons(rep: Reponse[]): Observable<Reponse>{
+    return this.http.post<Reponse>(this.addlistRep, rep);
+  }
 
   /*login1(utilisateur: UtilisateurModel): Observable<Any>{
     return this.http.post(this.connexion, utilisateur);
     // return this.http.post(this.connexion, personne);
   }*/
-  getAllThemes(): Observable<Theme[]>{
-    return this.http.get<Theme[]>(this.listTheme);
-  }
+
 
   getAllUser(): Observable<Utilisateur[]>{
     return this.http.get<Utilisateur[]>(this.listUser);
   }
 
-  nbCategorieByTheme(ThemeId: string): Observable<string>{
-    return this.http.get<string>(this.compteCategorieParTheme + ThemeId);
-  }
-
-  getUnUserService(UtilisateurId: string): Observable<Utilisateur>{
+  getUnUserService(UtilisateurId: number): Observable<Utilisateur>{
     return this.http.get<Utilisateur>(this.unUser + UtilisateurId);
   }
 
-  AddTheme(theme: Theme): Observable<Theme>{
-    return null;
+
+
+  saveUserService(user: Utilisateur): Observable<Utilisateur>{
+    return this.http.post<Utilisateur>(this.saveApprenant, user);
   }
 
+  saveRespo(responsable: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(this.addRespo, responsable);
+  }
+
+  getRespo(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.listRespo);
+  }
+
+
+
+  addCategorie(cat: Categorie): Observable<Categorie>{
+    return this.http.post<Categorie>(this.addCat, cat);
+  }
+
+  listRepQuest(id: number): Observable<Reponse[]>{
+    return this.http.get<Reponse[]>(this.listRep + id);
+  }
+
+  modifReponse(updateReponse: Reponse) {
+    return this.http.put<Question>(this.modRep, updateReponse);
+  }
 }

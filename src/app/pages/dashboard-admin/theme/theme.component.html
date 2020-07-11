@@ -1,240 +1,313 @@
 <!--Ajout theme-->
-<div class="row">
-  <div class="col-lg-9 col-md-7 col-sm-6"></div>
-  <div class="col-lg-3 col-md-5 col-sm-6 text-right" style="margin-bottom: 10px">
-    <button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#ajoutThemeModal">
-      Ajouter un thème
-    </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="ajoutThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="ajoutThemeModalLabel">Ajouter un thème</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form>
-            <div class="modal-body">
-
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Nom du thème</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nom du thème" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description du thème</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du thème"></textarea>
-              </div>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              <button type="submit" class="btn btn-primary">Enregistrer thème</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!--
-        <app-ajouter></app-ajouter>
-    -->
-  </div>
-</div>
-
+<app-ajouter [moi]="moi" [responsablesThemes]="responsablesTheme"></app-ajouter>
 
 <div class="row " style=" padding: 3px">
 
   <!--list themes-->
   <div class="list-group col-3 shadow-none  scr">
-    <a *ngFor="let theme of themes" (click)="selectTheme(theme)" class="list-group-item list-group-item-action">{{theme.libelle}}</a>
+    <a *ngFor="let th of t"
+       class="list-group-item list-group-item-action" (click)="choisirTheme(th)">{{th.libelle}}</a>
 
-    <!--<app-list></app-list>-->
+    <!--<app-list>
+    *ngFor="let theme of themes" (click)="selectTheme(theme)" {{theme.libelle}}
+    </app-list>-->
   </div>
   <!--contenu theme-->
   <div class="col-9 card shadow-none  " >
-    <div style="margin-top: 7px;">
-      <h5 *ngIf="selectedTheme != null" >{{selectedTheme.libelle}}</h5>
-      <h5 *ngIf="selectedTheme != null" class="" >Responsable : {{u.nom}}</h5>
-      <h6 class=" mb-2 text-muted">PHD in Data Base Administration at university of Cleveland</h6>
-      <div class="row ">
+<!--
+    <app-delete-consulter-modifer [themeChoisi]="themeChoisi" [themeModif]="themeModif"></app-delete-consulter-modifer>
+-->
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card shadow-none border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">CATEGORIE</div>
-                  <div class="h5 mb-0 font-weight-bold text-muted" *ngIf="selectedTheme != null">{{r}}</div>
+    <div>
+      <div style="margin-top: 7px;">
+        <h5>{{themeChoisi.libelle}}</h5>
+        <h5 class="">Responsable : {{user.nom}}</h5>
+        <h6 class=" mb-2 text-muted">PHD in Data Base Administration at university of Cleveland</h6>
+        <div class="row ">
+
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow-none border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">CATEGORIE</div>
+                    <div class="h5 mb-0 font-weight-bold text-muted">{{categorie}}</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fa fa-list fa-2x text-muted"></i>
+                  </div>
                 </div>
-                <div class="col-auto">
-                  <i class="fa fa-list fa-2x text-muted"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow-none border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">QUESTION</div>
+                    <div class="h5 mb-0 font-weight-bold text-muted">{{question}}</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fa fa-question fa-2x text-muted"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow-none border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">CARTE</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-muted">{{carte}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fa fa-map fa-2x text-muted"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pending Requests Card Example -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow-none border-left-warning shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">INSCRITS</div>
+                    <div class="h5 mb-0 font-weight-bold text-muted">18</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fa fa-user fa-2x text-muted"></i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card shadow-none border-left-success shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">QUESTION</div>
-                  <div class="h5 mb-0 font-weight-bold text-muted">45</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fa fa-question fa-2x text-muted"></i>
-                </div>
-              </div>
-            </div>
-          </div>
+        <p>{{themeChoisi.description}}</p>
+      </div>
+      <!--<app-un-theme></app-un-theme>-->
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col-3"></div>
+        <div class="col-3">
+          <button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#modifierThemeModal">
+            Modifier un thème
+          </button>
         </div>
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card shadow-none border-left-info shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">CARTE</div>
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-auto">
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-muted">19</div>
+        <!-- Modal -->
+        <div class="modal fade" id="modifierThemeModal" tabindex="-1" role="dialog"
+             aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modifierThemeModalLabel">Modifier un thème</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form #ff="ngForm" name="form" (submit)="ff.form.valid && modifierTheme()" novalidate action="">
+                <div class="modal-body">
+
+                  <div class="form-group">
+                    <label for="libelle">Nom du thème</label>
+                    <input type="text"
+                           class="form-control"
+                          placeholder="Nom du theme"
+                          id="libelle"
+                          name="libelle"
+                    #libelle="ngModel"
+                    [(ngModel)]="themeModif.libelle"
+                    [ngClass]="{'is-invalid': ff.submitted && libelle.invalid}"
+                    required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="description">Description du thème</label>
+                    <textarea
+                      class="form-control"
+                      id="description" rows="3"
+                      name="description"
+                      [(ngModel)]="themeModif.description"
+                      #description="ngModel"
+                      [ngClass]="{'is-invalid': ff.submitted && description.invalid}"
+                      required></textarea>
+                    <div *ngIf="ff.submitted && description.invalid" class="invalid-input">
+                      <div *ngIf="description.errors?.required">La description est invalid</div>
                     </div>
                   </div>
                 </div>
-                <div class="col-auto">
-                  <i class="fa fa-map fa-2x text-muted"></i>
+                <hr>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                  <button type="submit" class="btn btn-primary">Enregistrer thème</button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
 
-        <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card shadow-none border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">INSCRITS</div>
-                  <div class="h5 mb-0 font-weight-bold text-muted">18</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fa fa-user fa-2x text-muted"></i>
-                </div>
+        <div class="col-3"></div>
+
+        <div class="col-3">
+          <button type="button" class="btn btn-danger bordure" data-toggle="modal" data-target="#supprimerThemeModal">
+            Supprimer
+          </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="supprimerThemeModal" tabindex="-1" role="dialog"
+             aria-labelledby="supprimerThemeModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="supprimerThemeModalLabel">Modifier un thème</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
+              <form>
+                <div class="modal-body">
+                  Voulez vous vraiment suppirmer ce thème?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
+                  <form #fff="ngForm" name="form" (submit)="fff.form.valid && supprimerTheme(themeModif)" novalidate action="">
+                    <button type="submit" class="btn btn-danger">OUI</button>
+                  </form>
+                </div>
+              </form>
             </div>
           </div>
         </div>
+
       </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
-    <!--<app-un-theme></app-un-theme>-->
-    <div class="row" style="margin-bottom: 10px">
-      <div class="col-3"></div>
-      <div class="col-3">
-        <button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#modifierThemeModal">
-          Modifier un thème
-        </button>
-      </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="modifierThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modifierThemeModalLabel">Modifier un thème</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form>
-              <div class="modal-body" *ngIf="selectedTheme != null">
-
-                <div class="form-group">
-                  <label for="exampleFormControlInput1">Nom du thème</label>
-                  <input type="text" class="form-control" id="nomTheme" placeholder="Nom du thème" required [value]="selectedTheme.libelle">
-                </div>
-                <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Description du thème</label>
-                  <textarea class="form-control" id="descriptionTheme" rows="3" placeholder="Description du thème" [value]="selectedTheme.description"></textarea>
-                </div>
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                <button type="submit" class="btn btn-primary">Enregistrer thème</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-3"></div>
-
-      <div class="col-3">
-        <button type="button" class="btn btn-danger bordure" data-toggle="modal" data-target="#supprimerThemeModal">
-          Supprimer
-        </button>
-      </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="supprimerThemeModal" tabindex="-1" role="dialog" aria-labelledby="supprimerThemeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="supprimerThemeModalLabel">Modifier un thème</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form>
-              <div class="modal-body">
-                Voulez vous vraiment suppirmer ce thème?
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
-                <button type="submit" class="btn btn-danger">OUI</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
+      <!--<app-delete-consulter-modifer></app-delete-consulter-modifer>-->
     </div>
-    <!--<app-delete-consulter-modifer></app-delete-consulter-modifer>-->
+
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button"
+                    data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                    aria-controls="collapseOne">
+              Les catégories
+            </button>
+          </h2>
+        </div>
+        <div class="collapse show" id="collapseOne"aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <div class="text-right" style="display: block"><div style="display: inline-block">Ajoutez une catégorie : </div><button class="btn btn-primary rounded-pill" style="display: inline-block" data-toggle="modal" data-target="#ajouterCategorieModal"><li class="fa fa-plus text-white"></li></button></div>
+            <table class="table table-hover table-bordered bg-light">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom de la catégorie</th>
+                <th scope="col">Responsable de la catégorie</th>
+                <th scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Catégorie1</td>
+                <td>Respo 1</td>
+                <td>
+                  <div class="row">
+                    <div class="col-6 text-center"><a href="" class="fa fa-trash text-danger fa-2x "></a></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">1</th>
+                <td>Catégorie1</td>
+                <td>Respo 1</td>
+                <td>
+                  <div class="row">
+                    <div class="col-6 text-center"><a href="" class="fa fa-trash text-danger fa-2x "></a></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">1</th>
+                <td>Catégorie1</td>
+                <td>Respo 1</td>
+                <td>
+                  <div class="row">
+                    <div class="col-6 text-center"><a href="" class="fa fa-trash text-danger fa-2x "></a></div>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
+<div class="modal fade" id="ajouterCategorieModal" tabindex="-1" role="dialog"
+     aria-labelledby="ajouterCategorieModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ajouterCategorieModalLabel">Enregistrer une catégorie dans {{themeChoisi.libelle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #fcat="ngForm" name="form" (submit)="fcat.form.valid && ajouterCategorie()" novalidate action="">
+        <div class="modal-body">
 
-<!--
-&lt;!&ndash;Ajout theme&ndash;&gt;
-<div class="row">
-  <div class="col-lg-9 col-md-7 col-sm-6"></div>
-  <div class="col-lg-3 col-md-5 col-sm-6" style="margin-bottom: 10px">
-    <app-ajouter></app-ajouter>
+          <div class="form-group">
+            <label for="libellecat">Nom du thème</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Nom du theme"
+                   id="libellecat"
+                   name="libellecat"
+                   #libellecat="ngModel"
+                   [(ngModel)]="categ.libelle"
+                   [ngClass]="{'is-invalid': fcat.submitted && libellecat.invalid}"
+                   required>
+          </div>
+
+          <div class="form-group">
+            <label for="descriptioncat">Description du thème</label>
+            <textarea
+              class="form-control"
+              id="descriptioncat" rows="3"
+              name="descriptioncat"
+              [(ngModel)]="categ.description"
+              #descriptioncat="ngModel"
+              [ngClass]="{'is-invalid': fcat.submitted && descriptioncat.invalid}"
+              required></textarea>
+            <div *ngIf="fcat.submitted && descriptioncat.invalid" class="invalid-input">
+              <div *ngIf="descriptioncat.errors?.required">La description est invalid</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-
-
-<div class="row bg-white shadow" style=" padding: 3px">
-
-  &lt;!&ndash;list themes&ndash;&gt;
-  <div class="list-group col-3 shadow-none scroller scr">
-    <app-list></app-list>
-  </div>
-  &lt;!&ndash;contenu theme&ndash;&gt;
-  <div class="col-9 card shadow-none  scroller" style="height: 250px ">
-    <app-delete-consulter-modifer></app-delete-consulter-modifer>
-  </div>
-</div>
--->

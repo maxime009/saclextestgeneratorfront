@@ -1,10 +1,8 @@
 // import {resolveSrv} from "dns";
 
-enum Role {
-  administrateur,
-  apprenant,
-  responsable_theme
-}
+
+
+import {Role} from './role';
 
 enum Sexe {
   masculin,
@@ -12,15 +10,18 @@ enum Sexe {
 }
 
 export interface Utilisateur {
+  id: number;
   nom: string;
   prenom: string;
   email: string;
   telephone: string;
-  dateDeNaissance: Date;
+  dateNaissance: any;
+  dat: string;
   adresse: string;
   login: string;
   password: string;
   isActive: boolean;
   role: Role;
   sexe: Sexe;
+  description: string;
 }

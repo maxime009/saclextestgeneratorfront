@@ -3,7 +3,12 @@ import {Observable} from 'rxjs';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StgService} from '../../appl/stg.service';
-//import { AuthenticationService } from './auth.service';
+// import * as moment from 'moment';
+import * as moment from 'moment';
+import {Utilisateur} from '../../models/utilisateur';
+import {Role} from '../../models/role';
+import {UtilisateursService} from "../../appl/utilisateurs.service";
+// import { AuthenticationService } from './auth.service';
 
 
 @Component({
@@ -11,68 +16,104 @@ import {StgService} from '../../appl/stg.service';
   templateUrl: './connexion.component.html',
   styleUrls: ['./connexion.component.css']
 })
-export class ConnexionComponent implements OnInit {
-  login: string;
-  password : string;
-  errorMessage = 'Invalid Credentials';
-  successMessage: string;
-  invalidLogin = false;
-  loginSuccess = false;
-  //model: any = {};
 
-  model: UtilisateurModel={
-    login:'',
-    password:''
+export class ConnexionComponent implements OnInit {
+  moi: Utilisateur;
+  u: any;
+  a: any;
+  id: number;
+
+  model: LoginViewModel = {
+    username: '',
+    password: ''
   };
 
+  utilisateur: Utilisateur =  {
+    id: null,
+    nom: '',
+    prenom: '',
+    email: '',
+    telephone: '',
+    login: '',
+    adresse: '',
+    password: '',
+    isActive : null,
+    role : null,
+    sexe : null,
+    dateNaissance: null,
+    dat: null,
+    description: null
+  };
+
+
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private stg: StgService,
-    private http: HttpClient,
-    //private authenticationService: AuthenticationService
+    private userService: UtilisateursService
   ) { }
 
   ngOnInit(): void {
-   // sessionStorage.setItem('token', '');
   }
 
-  /*login(): void {
-    this.stg.login1(this.model).subscribe(isValid => {
-      if (isValid) {
-        sessionStorage.setItem(
-          'token',
-          btoa(this.model.login + ':' + this.model.password)
-        );
-        this.router.navigate(['']);
-      } else {
-        alert('Authentication failed.');
+  login(): void{
+    this.stg.connec(this.model).subscribe(
+      res => {
+          this.setSession(res);
+          this.userService.moi = res.body;
+          this.u = res.body.nom;
+          this.id = res.body.id;
+          localStorage.setItem('nom', this.u.toString());
+          localStorage.setItem('id', this.id.toString());
+          if (res.body.role === 'ADMINISTRATEUR'){
+            this.router.navigate(['/admin']);
+          }
+          if (res.body.role === 'RESPONSABLE_THEME') {
+            this.router.navigate(['/responsableTheme']);
+          }
+          if (res.body.role === 'RESPONSABLE_CATEGORIE') {
+            this.router.navigate(['/responsable']);
+          }
+          if (res.body.role === 'APPRENANT') {
+            this.router.navigate(['/apprenant']);
+          }
+      },
+      err => {
+        alert('mdp ou email incorrect');
       }
-    });
-  }*/
-
-  login1() {
-    let url = 'http://localhost:8086/login';
-    this.http.post<Observable<boolean>>(url, {
-      login: this.model.login,
-      password: this.model.password
-    }).subscribe(isValid => {
-      if (isValid) {
-        sessionStorage.setItem(
-          'token',
-          btoa(this.model.login + ':' + this.model.password)
-        );
-        this.router.navigate(['']);
-      } else {
-        alert('Authentication failed.');
-      }
-    });
+    );
   }
 
+  private setSession(authResult: any){
+    const expiresAt = moment().add(authResult.expiresIn, 'second');
+    localStorage.setItem('token', authResult.headers.get('Authorization'));
+    localStorage.setItem('expires_at', authResult.headers.get('Dateexpiration') );
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('nom');
+    localStorage.removeItem('id');
+    localStorage.removeItem('expires_at');
+
+  }
+
+  public isLoggedIn() {
+    return moment().isBefore(localStorage.getItem('expires_at'));
+
+  }
+
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+  getExpiration() {
+    const expiration = localStorage.getItem('expires_at');
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
+  }
 
 }
 
-export interface UtilisateurModel {
-  login: string;
+export interface LoginViewModel {
+  username: string;
   password: string;
 }

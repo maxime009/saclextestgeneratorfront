@@ -1,0 +1,15 @@
+.petitlogo{
+  height: 46px;
+  width: 150px;
+}
+.navbar-right li a {
+  text-align: right;
+}
+
+.fix {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}

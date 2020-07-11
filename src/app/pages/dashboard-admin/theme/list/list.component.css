@@ -1,3 +1,14 @@
 .pad{
   margin-top:15px;
 }
+.bas{
+  margin-bottom: 1.5rem;
+}
+.scroller {
+  width: 300px;
+  height: 300px;
+  overflow-y: scroll;
+  scrollbar-face-color: aqua;
+  scrollbar-color: #f2f2f2 transparent;
+  scrollbar-width: thin;
+}
