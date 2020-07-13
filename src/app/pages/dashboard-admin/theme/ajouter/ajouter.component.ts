@@ -39,7 +39,7 @@ export class AjouterComponent implements OnInit {
 
   saveTheme(): void {
     const token = localStorage.getItem('token');
-    //this.themeModel.utilisateur = this.moi;
+    // this.themeModel.utilisateur = this.moi;
     this.themeService.addThemme(this.themeModel, token).subscribe(
       res => {
         location.reload();
@@ -62,13 +62,4 @@ export class AjouterComponent implements OnInit {
       }
     );
   }*/
-}
-
-enum Role {
-  ADMINISTRATEUR, APPRENANT, RESPONSABLE
-}
-
-enum Sexe {
-  masculin,
-  feminin
 }
