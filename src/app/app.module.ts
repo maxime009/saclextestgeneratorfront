@@ -41,6 +41,7 @@ import { DetailThemeComponent } from './pages/dashboard-responsable-theme/theme-
 import { ListCategorieComponent } from './pages/dashboard-responsable-theme/list-categorie/list-categorie.component';
 import { DisplayQCMComponent } from './pages/dashboard-aprenant/display-qcm/display-qcm.component';
 import {CounterModule} from "ngx-counter";
+import { InformationSurCtegorieComponent } from './pages/dashboard-aprenant/information-sur-ctegorie/information-sur-ctegorie.component';
 
 
 
@@ -113,7 +114,8 @@ const appRoutes: Routes = [
     ListThemeParUserComponent,
     DetailThemeComponent,
     ListCategorieComponent,
-    DisplayQCMComponent
+    DisplayQCMComponent,
+    InformationSurCtegorieComponent
   ],
   imports: [
     BrowserModule,
@@ -124,8 +126,8 @@ const appRoutes: Routes = [
     RichTextEditorModule,
     AngularEditorModule,
     NgbModule,
-    ReactiveFormsModule
-    //CounterModule.forRoot()
+    ReactiveFormsModule,
+    CounterModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

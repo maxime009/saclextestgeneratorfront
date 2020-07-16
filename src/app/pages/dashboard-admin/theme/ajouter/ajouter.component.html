@@ -48,17 +48,16 @@
               </div>
               <div class="form-group">
                 <label for="responsableTheme"></label>
-                <select name="responsableTheme" id="responsableTheme" [(ngModel)]="themeModel.utilisateur" >
-                  <option value="" *ngFor="let respo of responsablesThemes" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
+                <select name="responsableTheme" id="responsableTheme" [(ngModel)]="themeModel.utilisateur" #responsableTheme="ngModel" >
+                  <option *ngFor="let respo of responsablesThemes" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
                 </select>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              <button type="submit" class="btn btn-primary">Enregistrer thème</button>
+              <button type="submit" class="btn btn-primary">Enregistrer le thème</button>
             </div>
           </form>
-
         </div>
       </div>
     </div>

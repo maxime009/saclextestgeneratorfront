@@ -23,6 +23,7 @@ export class DeleteConsulterModiferComponent implements OnInit {
   @Input() themeChoisi: Theme = this.theme;
   user: Utilisateur;
   @Input() themeModif: Theme;
+  @Input() responsablesThemes: Utilisateur[];
   constructor(private themeService: ThemeService) { }
 
   ngOnInit(): void {

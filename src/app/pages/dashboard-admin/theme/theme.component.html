@@ -22,7 +22,7 @@
     <div>
       <div style="margin-top: 7px;">
         <h5>{{themeChoisi.libelle}}</h5>
-        <h5 class="">Responsable : {{user.nom}}</h5>
+        <h5 class="">Responsable : {{themeChoisi.utilisateur.nom}} {{themeChoisi.utilisateur.prenom}}</h5>
         <h6 class=" mb-2 text-muted">PHD in Data Base Administration at university of Cleveland</h6>
         <div class="row ">
 
@@ -109,7 +109,7 @@
           </button>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal modifier theme-->
         <div class="modal fade" id="modifierThemeModal" tabindex="-1" role="dialog"
              aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -149,6 +149,14 @@
                     <div *ngIf="ff.submitted && description.invalid" class="invalid-input">
                       <div *ngIf="description.errors?.required">La description est invalid</div>
                     </div>
+                  </div>
+                  <div>Responsable Actuel : {{themeModif.utilisateur.nom}}{{themeModif.utilisateur.prenom}}</div>
+                  <div class="form-group">
+                    <label for="responsableThemeModif"></label>
+                    <select name="responsableThemeModif" id="responsableThemeModif" [(ngModel)]="themeModif.utilisateur" #responsableTheme="ngModel" >
+                      <option [ngValue]="themeModif.utilisateur">{{themeModif.utilisateur.nom}} {{themeModif.utilisateur.prenom}}</option>
+                      <option *ngFor="let respo of responsablesTheme" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
+                    </select>
                   </div>
                 </div>
                 <hr>
@@ -198,7 +206,9 @@
       </div>
       <!--<app-delete-consulter-modifer></app-delete-consulter-modifer>-->
     </div>
+    <app-list-categorie *ngIf="categories" [categories]="categories" [themeChoisi]="themeChoisi"></app-list-categorie>
 
+<!--
     <div class="accordion" id="accordionExample">
       <div class="card">
         <div class="card-header" id="headingOne">
@@ -259,9 +269,11 @@
         </div>
       </div>
     </div>
+-->
   </div>
 </div>
 
+<!--
 <div class="modal fade" id="ajouterCategorieModal" tabindex="-1" role="dialog"
      aria-labelledby="ajouterCategorieModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -311,3 +323,4 @@
     </div>
   </div>
 </div>
+-->

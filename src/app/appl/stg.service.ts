@@ -56,6 +56,7 @@ export class StgService {
   }
 
   addQuestion(quest: Question): Observable<Question>{
+    console.log(quest);
     return this.http.post<Question>(this.addQuest, quest);
   }
 
@@ -68,6 +69,7 @@ export class StgService {
   }
 
   addListRepons(rep: Reponse[]): Observable<Reponse>{
+    console.log(rep);
     return this.http.post<Reponse>(this.addlistRep, rep);
   }
 

@@ -48,6 +48,7 @@ export class ThemeComponent implements OnInit {
   };
   public responsablesTheme: Utilisateur[] = new Array(0);
   public responsablesCategorie: Utilisateur[] = new Array(0);
+  categories: Categorie[] = new Array(0);
 
   constructor(
     private themeService: ThemeService,
@@ -57,6 +58,7 @@ export class ThemeComponent implements OnInit {
     private utilisateursService: UtilisateursService) { }
 
   ngOnInit(): void {
+    this.recupererPersonneConncte();
     this.getThemes();
     if ( localStorage.getItem('id') != null){
       this.getConnectedUser();
@@ -73,7 +75,7 @@ export class ThemeComponent implements OnInit {
           this.themeChoisi = this.t[0];
           this.themeModel = this.t[0];
           this.themeModif = this.t[0];
-          this.user = this.t[0].utilisateur;
+          this.getCategorieduTheme();
           /*this.getQuestion(this.t[0].id_theme);
           this.getCarte(this.t[0].id_theme);
           this.getCategorie(this.t[0].id_theme);*/
@@ -81,6 +83,17 @@ export class ThemeComponent implements OnInit {
       },
       err => {
         alert('error');
+      }
+    );
+  }
+
+  getCategorieduTheme() {
+    this.cat.getCategoriedeTheme(this.themeChoisi.id_theme).subscribe(
+      res => {
+        this.categories = res;
+      },
+      err => {
+        alert('error gettx categorie du theme');
       }
     );
   }
@@ -99,12 +112,79 @@ export class ThemeComponent implements OnInit {
   choisirTheme(th: Theme) {
     this.themeChoisi = th;
     this.themeModif = this.themeChoisi;
-    /*this.getQuestion(th.id_theme);
-    this.getCarte(th.id_theme);
-    this.getCategorie(th.id_theme);*/
-    this.user = th.utilisateur;
+    this.getCategorieduTheme();
   }
 
+
+
+  modifierTheme() {
+    const token = localStorage.getItem('token');
+    console.log(this.themeModif)
+    this.themeService.modThemme(this.themeModif, token).subscribe(
+      res => {
+        location.reload();
+      },
+      err => {
+        alert('error saving theme');
+      }
+    );
+  }
+
+  supprimerTheme(theme: Theme) {
+    const token = localStorage.getItem('token');
+    this.themeService.supThemme(theme.id_theme, token).subscribe(
+      res => {
+        location.reload();
+      },
+      err => {
+        alert('An error occurred while deleting the theme');
+      }
+      );
+  }
+
+  ajouterCategorie() {
+    const token = localStorage.getItem('token');
+    //this.categ.respCat = this.moi;
+    this.cat.addCategorie(this.categ, token).subscribe(
+      res => {
+        location.reload();
+      },
+      err => {
+        alert('La catégorie pas ajouté');
+      }
+    );
+  }
+
+  getResponsableT(){
+    const token = localStorage.getItem('token');
+    this.utilisateursService.getRespoTheme(token).subscribe(
+      res => {
+        this.responsablesTheme = res;
+      },
+      err => {
+        alert('error gettx respos theme');
+      }
+    );
+  }
+  getResponsableC(){
+    const token = localStorage.getItem('token');
+    this.utilisateursService.getRespoCateg().subscribe(
+      res => {
+        this.responsablesCategorie = res;
+      },
+      err => {
+        alert('error gettx respos categ');
+      }
+    );
+  }
+
+  recupererPersonneConncte(){
+    let personne = localStorage.getItem('moi');
+    let pers = JSON.parse(personne);
+    this.moi = pers;
+  }
+
+  /*
   public getQuestion(idTheme: number){
     this.themeService.getnbQuestParTheme(idTheme).subscribe(
       res => {
@@ -138,66 +218,7 @@ export class ThemeComponent implements OnInit {
       }
     );
   }
-
-  modifierTheme() {
-    const token = localStorage.getItem('token');
-    this.themeService.modThemme(this.themeModif, token).subscribe(
-      res => {
-        location.reload();
-      },
-      err => {
-        alert('error saving theme');
-      }
-    );
-  }
-
-  supprimerTheme(theme: Theme) {
-    const token = localStorage.getItem('token');
-    this.themeService.supThemme(theme.id_theme, token).subscribe(
-      res => {
-        location.reload();
-      },
-      err => {
-        alert('An error occurred while deleting the theme');
-      }
-      );
-  }
-
-  ajouterCategorie() {
-    const token = localStorage.getItem('token');
-    this.categ.respCat = this.moi;
-    this.cat.addCategorie(this.categ, token).subscribe(
-      res => {
-        location.reload();
-      },
-      err => {
-        alert('La catégorie pas ajouté');
-      }
-    );
-  }
-
-  getResponsableT(){
-    const token = localStorage.getItem('token');
-    this.utilisateursService.getRespoTheme(token).subscribe(
-      res => {
-        this.responsablesTheme = res;
-      },
-      err => {
-        alert('error gettx respos theme');
-      }
-    );
-  }
-  getResponsableC(){
-    const token = localStorage.getItem('token');
-    this.utilisateursService.getRespoCateg().subscribe(
-      res => {
-        this.responsablesCategorie = res;
-      },
-      err => {
-        alert('error gettx respos categ');
-      }
-    );
-  }
+  * */
 }
 
 

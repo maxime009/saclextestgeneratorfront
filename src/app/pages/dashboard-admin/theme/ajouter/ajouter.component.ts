@@ -27,6 +27,8 @@ export class AjouterComponent implements OnInit {
 
   @Input() moi: Utilisateur;
   @Input() responsablesThemes: Utilisateur[];
+  responsablesTheme: any;
+  //responsablesTheme: Utilisateur;
   constructor(private themeService: ThemeService, private stg: StgService) { }
 
   ngOnInit(): void {
@@ -39,7 +41,6 @@ export class AjouterComponent implements OnInit {
 
   saveTheme(): void {
     const token = localStorage.getItem('token');
-    // this.themeModel.utilisateur = this.moi;
     this.themeService.addThemme(this.themeModel, token).subscribe(
       res => {
         location.reload();
@@ -62,4 +63,8 @@ export class AjouterComponent implements OnInit {
       }
     );
   }*/
+  getRespo(responsablesTheme: Utilisateur) {
+    console.log(responsablesTheme);
+    this.themeModel.utilisateur = responsablesTheme;
+  }
 }

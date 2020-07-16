@@ -12,6 +12,9 @@ import {Role} from '../models/role';
 })
 
 export class NavigationComponent implements OnInit {
+
+
+  personConnected: Utilisateur;
   activeId: 1;
   moi: Utilisateur = {
     id: null,
@@ -29,10 +32,6 @@ export class NavigationComponent implements OnInit {
     dat: null,
     description: null
   };
-  rolAD: Role.ADMINISTRATEUR;
-  rolRT: Role.RESPONSABLE_THEME;
-  rolRC: Role.RESPONSABLE_CATEGORIE;
-  rolA: Role.APPRENANT;
   id: any;
   i: number;
   m: boolean;
@@ -44,27 +43,34 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.recupererPersonneConncte();
 
     if (localStorage.getItem('id')){
       this.getConnectedUser();
     }
     this.m = this.isLoggedIn();
+    // this.getPersonConnected();
   }
 
   public isLoggedIn() {
     return moment().isBefore(localStorage.getItem('expires_at'));
   }
 
+  /*getPersonConnected(){
+    let personCon = localStorage.getItem('moi');
+    this.personConnected = personCon
+  }*/
+
   getConnectedUser(): void{
-    const y: number = + localStorage.getItem('id');
-    this.stg.getUnUserService(y).subscribe(
-      res => {
-        this.moi = res;
-      },
-      err => {
-        alert('error gettx user');
-      }
-    );
+    let personne = localStorage.getItem('moi');
+    let pers = JSON.parse(personne);
+    this.moi = pers;
+  }
+
+  recupererPersonneConncte(){
+    let personne = localStorage.getItem('moi');
+    let pers = JSON.parse(personne);
+    this.personConnected = pers;
   }
 
 }

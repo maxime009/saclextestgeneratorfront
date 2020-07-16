@@ -87,6 +87,8 @@ export class ConnexionComponent implements OnInit {
     const expiresAt = moment().add(authResult.expiresIn, 'second');
     localStorage.setItem('token', authResult.headers.get('Authorization'));
     localStorage.setItem('expires_at', authResult.headers.get('Dateexpiration') );
+    localStorage.setItem('moi', JSON.stringify(authResult.body));
+    console.log(localStorage);
   }
 
   logout() {
