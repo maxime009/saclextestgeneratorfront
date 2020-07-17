@@ -1,6 +1,6 @@
 <!--Ajout theme-->
 
-<app-ajouter [moi]="moi" [responsablesThemes]="responsablesTheme"></app-ajouter>
+<app-ajouter [moi]="moi" [responsablesThemes]="responsablesTheme" (getThemes) = "getThemes()"></app-ajouter>
 
 <div class="row " style=" padding: 3px">
 
@@ -116,7 +116,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="modifierThemeModalLabel">Modifier un thème</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModThemeModal>
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -183,8 +183,8 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="supprimerThemeModalLabel">Modifier un thème</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="supprimerThemeModalLabel" >Supprimer un thème</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeDelThemeModal>
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -206,7 +206,7 @@
       </div>
       <!--<app-delete-consulter-modifer></app-delete-consulter-modifer>-->
     </div>
-    <app-list-categorie *ngIf="categories" [categories]="categories" [themeChoisi]="themeChoisi"></app-list-categorie>
+    <app-list-categorie style="margin-bottom: 12px" *ngIf="categories" [categories]="categories" [themeChoisi]="themeChoisi" (getCategorieduTheme)="getCategorieduTheme()"></app-list-categorie>
 
 <!--
     <div class="accordion" id="accordionExample">

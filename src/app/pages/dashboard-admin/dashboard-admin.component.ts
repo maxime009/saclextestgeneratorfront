@@ -3,6 +3,8 @@ import {Theme} from '../../models/theme';
 import {ThemeService} from '../../appl/theme.service';
 import {CategorieService} from '../../appl/categorie.service';
 import {Categorie} from '../../models/categorie';
+import {StgService} from '../../appl/stg.service';
+import {Question} from '../../models/question';
 
 
 @Component({
@@ -15,9 +17,17 @@ export class DashboardAdminComponent implements OnInit {
   categories: Categorie[] = new Array(0);
   themeChoisi: Theme;
   categorieChoisi: Categorie;
+  formQuestion = false;
+  listQuestion = false;
+  themes2: Theme[] = new Array(0);
+  categories2: Categorie[] = new Array(0);
+  themeChoisi2: Theme;
+  categorieChoisi2: Categorie;
+  listeDeQuestion: Question[] = new Array(0);
 
   constructor(private themeService: ThemeService,
-              private categorieService: CategorieService) {}
+              private categorieService: CategorieService,
+              private stgService: StgService) {}
   ngOnInit(): void {
     this.getThemes();
   }
@@ -26,6 +36,7 @@ export class DashboardAdminComponent implements OnInit {
     this.themeService.getAllThemes().subscribe(
       res => {
         this.themes = res;
+        this.themes2 = res;
       },
       err => {
         alert('error');
@@ -45,8 +56,41 @@ getCategorieduTheme() {
   );
 }
 
+getCategorieduTheme2() {
+  this.categorieService.getCategoriedeTheme(this.themeChoisi2.id_theme).subscribe(
+    res => {
+      this.categories2 = res;
+      console.log(this.categories);
+    },
+    err => {
+      alert('error gettx categorie du theme');
+    }
+  );
+}
+
+afficherFormQuestion(){
+  this.formQuestion = !this.formQuestion;
+  if (this.listQuestion){
+    this.listQuestion = !this.formQuestion;
+  }
+}
+afficherListQuestion(){
+  this.listQuestion = !this.listQuestion;
+  if (this.formQuestion){
+    this.formQuestion = !this.listQuestion;
+  }
+}
 
 
-
-
+  getQuestiondeCategorie() {
+    this.stgService.listerQuestionByCat(this.categorieChoisi2.idCategorie).subscribe(
+      res => {
+        this.listeDeQuestion = res;
+        console.log(this.listeDeQuestion);
+      },
+      err => {
+        alert('error gettx questions');
+      }
+    );
+  }
 }

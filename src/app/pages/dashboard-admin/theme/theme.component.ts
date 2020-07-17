@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Theme} from '../../../models/theme';
 import {Role} from '../../../models/Role';
 import {StgService} from '../../../appl/stg.service';
 import {Utilisateur} from '../../../models/utilisateur';
 import {Categorie} from '../../../models/categorie';
-import {FormsModule} from "@angular/forms";
-import {Router} from "@angular/router";
-import {ThemeService} from "../../../appl/theme.service";
-import {CategorieService} from "../../../appl/categorie.service";
-import {UtilisateursService} from "../../../appl/utilisateurs.service";
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ThemeService} from '../../../appl/theme.service';
+import {CategorieService} from '../../../appl/categorie.service';
+import {UtilisateursService} from '../../../appl/utilisateurs.service';
 
 @Component({
   selector: 'app-theme',
@@ -49,6 +49,8 @@ export class ThemeComponent implements OnInit {
   public responsablesTheme: Utilisateur[] = new Array(0);
   public responsablesCategorie: Utilisateur[] = new Array(0);
   categories: Categorie[] = new Array(0);
+  @ViewChild('closeModThemeModal') closeModThemeModal: ElementRef;
+  @ViewChild('closeDelThemeModal') closeDelThemeModal: ElementRef;
 
   constructor(
     private themeService: ThemeService,
@@ -119,10 +121,11 @@ export class ThemeComponent implements OnInit {
 
   modifierTheme() {
     const token = localStorage.getItem('token');
-    console.log(this.themeModif)
+    console.log(this.themeModif);
     this.themeService.modThemme(this.themeModif, token).subscribe(
       res => {
-        location.reload();
+        this.closeModThemeModal.nativeElement.click();
+        this.getThemes();
       },
       err => {
         alert('error saving theme');
@@ -132,9 +135,11 @@ export class ThemeComponent implements OnInit {
 
   supprimerTheme(theme: Theme) {
     const token = localStorage.getItem('token');
+    console.log(theme);
     this.themeService.supThemme(theme.id_theme, token).subscribe(
       res => {
-        location.reload();
+        this.closeDelThemeModal.nativeElement.click();
+        this.getThemes();
       },
       err => {
         alert('An error occurred while deleting the theme');
@@ -144,7 +149,7 @@ export class ThemeComponent implements OnInit {
 
   ajouterCategorie() {
     const token = localStorage.getItem('token');
-    //this.categ.respCat = this.moi;
+    // this.categ.respCat = this.moi;
     this.cat.addCategorie(this.categ, token).subscribe(
       res => {
         location.reload();
@@ -179,8 +184,8 @@ export class ThemeComponent implements OnInit {
   }
 
   recupererPersonneConncte(){
-    let personne = localStorage.getItem('moi');
-    let pers = JSON.parse(personne);
+    const personne = localStorage.getItem('moi');
+    const pers = JSON.parse(personne);
     this.moi = pers;
   }
 
@@ -218,6 +223,9 @@ export class ThemeComponent implements OnInit {
       }
     );
   }
+  import { ViewChild, ElementRef} from '@angular/core';
+      @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
+      this.closeAddExpenseModal.nativeElement.click();
   * */
 }
 

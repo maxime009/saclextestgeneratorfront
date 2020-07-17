@@ -21,21 +21,54 @@
     </div>
     <div class="tab-pane fade show active" id="nav-question" role="tabpanel" aria-labelledby="nav-question-tab">
       Ajouter une nouvelle question:
-      <button class="btn btn-primary rounded-pill"><li class="fa fa-plus text-white"></li></button>
-      <div><i class="fa fa-plus-circle btn-primary"></i></div>
-      <div class="form-group">
-        <label for="listTheme">Choisissez le thème</label>
-        <select name="listTheme" id="listTheme" [(ngModel)]="themeChoisi" #listTheme="ngModel" (ngModelChange)="getCategorieduTheme()">
-          <option *ngFor="let theme of themes" [ngValue]="theme">{{theme.libelle}}</option>
-        </select>
+      <button class="btn btn-primary rounded-pill" *ngIf="!formQuestion" (click)="afficherFormQuestion()"><li class="fa fa-plus text-white"></li></button>
+      <button class="btn btn-primary rounded-pill" *ngIf="formQuestion" (click)="afficherFormQuestion()"><li class="fa fa-minus text-white"></li></button>
+      Consulter les questions:
+      <button class="btn btn-primary rounded-pill" *ngIf="!listQuestion" (click)="afficherListQuestion()"><li class="fa fa-plus text-white"></li></button>
+      <button class="btn btn-primary rounded-pill" *ngIf="listQuestion" (click)="afficherListQuestion()"><li class="fa fa-minus text-white"></li></button>
+
+      <div *ngIf="formQuestion" class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="listTheme">Choisissez le thème : </label>
+            <select name="listTheme" id="listTheme" [(ngModel)]="themeChoisi" #listTheme="ngModel"
+                    (ngModelChange)="getCategorieduTheme()">
+              <option *ngFor="let theme of themes" [ngValue]="theme">{{theme.libelle}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="themeChoisi">
+            <label for="listCategorie">Choisissez la catégorie : </label>
+            <select name="listCategorie" id="listCategorie" [(ngModel)]="categorieChoisi"
+                    #listCategorie="ngModel">
+              <option *ngFor="let categorie of categories" [ngValue]="categorie">{{categorie.libelle}}</option>
+            </select>
+          </div>
+          <div *ngIf="categorieChoisi">
+            <app-qcm [categorie]="categorieChoisi"></app-qcm>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="listCategorie">Choisissez la catégorie</label>
-        <select *ngIf="themeChoisi" name="listCategorie" id="listCategorie" [(ngModel)]="categorieChoisi" #listCategorie="ngModel">
-          <option *ngFor="let categorie of categories" [ngValue]="categorie">{{categorie.libelle}}</option>
-        </select>
+      <div *ngIf="listQuestion" class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="listTheme2">Choisissez le thème : </label>
+            <select name="listTheme2" id="listTheme2" [(ngModel)]="themeChoisi2" #listTheme2="ngModel"
+                    (ngModelChange)="getCategorieduTheme2()">
+              <option *ngFor="let theme of themes2" [ngValue]="theme">{{theme.libelle}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="themeChoisi2">
+            <label for="listCategorie2">Choisissez la catégorie : </label>
+            <select name="listCategorie2" id="listCategorie2" [(ngModel)]="categorieChoisi2"
+                    #listCategorie2="ngModel" (ngModelChange)="getQuestiondeCategorie()">
+              <option *ngFor="let categorie of categories2" [ngValue]="categorie">{{categorie.libelle}}</option>
+            </select>
+          </div>
+          <div *ngIf="categorieChoisi2">
+            <app-list-question [listeDeQuestion]="listeDeQuestion" (getQuestiondeCategorie)="getQuestiondeCategorie()"></app-list-question>
+          </div>
+        </div>
       </div>
-      <app-qcm [categorie]="categorieChoisi"></app-qcm>
 
     </div>
     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">

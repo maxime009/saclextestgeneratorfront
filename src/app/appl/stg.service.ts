@@ -43,9 +43,12 @@ export class StgService {
   private modQuest = this.base + 'question/modifierQuestion';
   private addRep = this.base + 'reponse/creerReponse';
   private modRep = this.base + 'reponse/modifierReponse';
+  private delRep = this.base + 'reponse/supprimerReponse/';
+  private delQuest = this.base + 'question/supprimerQuestion/';
   private addlistRep = this.base + 'reponse/savereponses';
   private addCat = this.base + 'responsable/creerCategorie';
   private listRep = this.base + 'question/listerReponses/';
+  private listQuestion = this.base + 'question/questionCategorie/';
   private yo: any;
   public moi: Utilisateur;
 
@@ -111,7 +114,20 @@ export class StgService {
     return this.http.get<Reponse[]>(this.listRep + id);
   }
 
-  modifReponse(updateReponse: Reponse) {
-    return this.http.put<Question>(this.modRep, updateReponse);
+  listerQuestionByCat(id: number): Observable<Question[]>{
+    return this.http.get<Question[]>(this.listQuestion + id);
+  }
+
+  modifReponse(updateReponse: Reponse): Observable<Reponse> {
+    console.log(updateReponse);
+    return this.http.put<Reponse>(this.modRep, updateReponse);
+  }
+
+  deleteReponse(idReponse: number) {
+    return this.http.delete(this.delRep + idReponse);
+  }
+
+  deleteQuestion(idQuestion: number) {
+    return this.http.delete(this.delQuest + idQuestion);
   }
 }
