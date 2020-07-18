@@ -71,9 +71,9 @@ export class StgService {
     return this.http.post<Reponse>(this.addRep, rep);
   }
 
-  addListRepons(rep: Reponse[]): Observable<Reponse>{
+  addListRepons(rep: Reponse[]): Observable<Reponse[]>{
     console.log(rep);
-    return this.http.post<Reponse>(this.addlistRep, rep);
+    return this.http.post<Reponse[]>(this.addlistRep, rep);
   }
 
   /*login1(utilisateur: UtilisateurModel): Observable<Any>{

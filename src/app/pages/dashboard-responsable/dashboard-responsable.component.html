@@ -1,0 +1,113 @@
+<div class="container">
+  <nav class="marge" >
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active text-black-50" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+         aria-controls="nav-home" aria-selected="true">Catégories</a>
+      <a class="nav-item nav-link text-black-50" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+         aria-controls="nav-profile" aria-selected="false">Question</a>
+      <a class="nav-item nav-link text-black-50" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+         aria-controls="nav-contact" aria-selected="false">dash</a>
+    </div>
+  </nav>
+
+  <!-- Button trigger modal -->
+  <div class="pad"></div>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+      categories
+      <div class="col-lg-9 col-md-7 col-sm-6">{{categories.length}}</div>
+      <div class="col-lg-3 col-md-5 col-sm-6 text-right" style="margin-bottom: 10px">
+        <button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#ajoutThemeModal">
+          Ajouter un thème
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ajoutThemeModal" tabindex="-1" role="dialog" aria-labelledby="ajoutThemeModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ajoutThemeModalLabel">Ajouter une categorie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form #ff="ngForm" name="form" (submit)="ff.form.valid && addCat()" novalidate action="">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="libelle">Nom du thème</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Nom du thème"
+                           id="libelle"
+                           name="libelle"
+                           [(ngModel)]="categorieModel.libelle"
+                           #libelle = "ngModel"
+                           [ngClass]="{'is-invalid': ff.submitted && libelle.invalid}"
+                           required/>
+                    <div *ngIf="ff.submitted && libelle.invalid" class="invalid-input">
+                      <div *ngIf="libelle.errors?.required">Le libelle est invalid</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="description">Description du thème</label>
+                    <textarea
+                      class="form-control"
+                      id="description" rows="3"
+                      name="libelle"
+                      [(ngModel)]="categorieModel.description"
+                      #description = "ngModel"
+                      [ngClass]="{'is-invalid': ff.submitted && description.invalid}"
+                      required></textarea>
+                    <div *ngIf="ff.submitted && description.invalid" class="invalid-input">
+                      <div *ngIf="description.errors?.required">La description est invalid</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                  <button type="submit" class="btn btn-primary">Enregistrer catégorie</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+        <!--
+            <app-ajouter></app-ajouter>
+        -->
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <div>Quelle type de question voulez vous</div>
+      <div class="row">
+        <div class="col-lg-8">
+          <button class="btn btn-primary" (click)="fqcm()">Question à choix multiple</button>
+          <button class="btn btn-primary" (click)="fexclu()">Question à choix exclusif</button>
+          <button class="btn btn-primary" (click)="ftrou()">Choix à trou</button>
+          <!--<select class="browser-default custom-select">
+            <option selected>Quelle type de question voulez vous</option>
+            <option value="1" (click)="fqcm()">Question à choix multiple</option>
+            <option value="2" (click)="fexclu()">Choix exclusif</option>
+            <option value="3">Three</option>
+          </select>-->
+        </div>
+      </div>
+      <div *ngIf="qcm == 1">
+        <app-qcm></app-qcm>
+      </div>
+      <div *ngIf="exclu == 1">
+        <app-choix-exclusif></app-choix-exclusif>
+      </div>
+      <div *ngIf="trou == 1">
+        <app-question-trou></app-question-trou>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+      dash
+    </div>
+  </div>
+</div>

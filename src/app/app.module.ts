@@ -43,6 +43,7 @@ import { DisplayQCMComponent } from './pages/dashboard-aprenant/display-qcm/disp
 import {CounterModule} from "ngx-counter";
 import { InformationSurCtegorieComponent } from './pages/dashboard-aprenant/information-sur-ctegorie/information-sur-ctegorie.component';
 import { ListQuestionComponent } from './pages/dashboard-admin/list-question/list-question.component';
+import { UneEvaluationComponent } from './composants/une-evaluation/une-evaluation.component';
 
 
 
@@ -117,7 +118,8 @@ const appRoutes: Routes = [
     ListCategorieComponent,
     DisplayQCMComponent,
     InformationSurCtegorieComponent,
-    ListQuestionComponent
+    ListQuestionComponent,
+    UneEvaluationComponent
   ],
   imports: [
     BrowserModule,

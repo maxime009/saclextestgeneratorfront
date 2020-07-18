@@ -1,0 +1,192 @@
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button"
+                data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                aria-controls="collapseOne">
+          Les catégories
+        </button>
+      </h2>
+    </div>
+    <div class="collapse show" id="collapseOne"aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="text-right" style="display: block"><div style="display: inline-block">Ajoutez une catégorie : </div>
+          <button class="btn btn-primary rounded-pill" style="display: inline-block" data-toggle="modal" data-target="#ajouterCategorieModal"><li class="fa fa-plus text-white"></li></button>
+        </div>
+        <table class="table table-hover table-bordered bg-light">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom de la catégorie</th>
+            <th scope="col">Responsable de la catégorie</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let categorie of categories">
+            <th scope="row"></th>
+            <td>{{categorie.libelle}}</td>
+            <td>{{categorie.respCat.prenom}}</td>
+            <td>
+              <div class="row" (click)="getCategorieAModifier(categorie)">
+                <div class="col-6 text-center"><a href=""
+                                                  class="fa fa-pencil text-primary fa-2x"
+                                                  data-toggle="modal"
+                                                  data-target="#ModifierCategorieModal"></a></div>
+                <div class="col-6 text-center"><a
+                                                  class="fa fa-trash text-danger fa-2x"
+                                                  data-toggle="modal"
+                                                  data-target="#supprimerCategorieModal"></a></div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="ajouterCategorieModal" tabindex="-1" role="dialog" aria-labelledby="ajouterCategorieModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ajouterCategorieModalLabel">Ajouter une catégorie dans {{themeChoisi.libelle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeAddCatModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #fcat="ngForm" name="form" (submit)="fcat.form.valid && ajouterCatgorie(themeChoisi)" novalidate action="">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="libelle">Nom de la catégorie</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Nom de la catégorie"
+                   id="libelle"
+                   name="libelle"
+                   [(ngModel)]="categorieModel.libelle"
+                   #libelle = "ngModel"
+                   [ngClass]="{'is-invalid': fcat.submitted && libelle.invalid}"
+                   required/>
+            <div *ngIf="fcat.submitted && libelle.invalid" class="invalid-input">
+              <div *ngIf="libelle.errors?.required">Le libelle est invalid</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description de la catégorie</label>
+            <textarea
+              class="form-control"
+              id="description" rows="3"
+              name="libelle"
+              [(ngModel)]="categorieModel.description"
+              #description = "ngModel"
+              [ngClass]="{'is-invalid': fcat.submitted && description.invalid}"
+              required></textarea>
+            <div *ngIf="fcat.submitted && description.invalid" class="invalid-input">
+              <div *ngIf="description.errors?.required">La description est invalid</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="responsableCat"></label>
+            <select name="responsableCat" id="responsableCat" [(ngModel)]="categorieModel.respCat" #responsableCat="ngModel">
+
+              <option *ngFor="let respo of responsablesCategories" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer la catégorie</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" *ngIf="categorieModif" id="ModifierCategorieModal" tabindex="-1" role="dialog" aria-labelledby="ModifierCategorieModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModifierCategorieModalLabel">Modifier catégorie dans {{themeChoisi.libelle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModCatModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #fcatM="ngForm"
+            name="form"
+            (submit)="fcatM.form.valid && modifierCatgorie(categorieModif)"
+            novalidate action="">
+<!--            [formGroup]="ModifierCat"-->
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="libelleM">Nom de la catégorie</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Nom de la catégorie"
+                   id="libelleM"
+                   name="libellem"
+                   [(ngModel)]="categorieModif.libelle"
+                   #libellem = "ngModel"
+                   [ngClass]="{'is-invalid': fcatM.submitted && libellem.invalid}"
+                   required/>
+            <div *ngIf="fcatM.submitted && libelle.invalid" class="invalid-input">
+              <div *ngIf="libelle.errors?.required">Le libelle est invalid</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="descriptionM">Description de la catégorie</label>
+            <textarea
+              class="form-control"
+              id="descriptionM" rows="3"
+              name="descriptionm"
+              [(ngModel)]="categorieModif.description"
+              #descriptionm = "ngModel"
+              [ngClass]="{'is-invalid': fcatM.submitted && descriptionm.invalid}"
+              required></textarea>
+            <div *ngIf="fcatM.submitted && description.invalid" class="invalid-input">
+              <div *ngIf="description.errors?.required">La description est invalid</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="responsableCatM"></label>
+            <select name="responsableCatM" id="responsableCatM" [(ngModel)]="categorieModif.respCat"  #responsableCatM="ngModel">
+              <option [ngValue]="categorieModif.respCat" *ngIf="categorieModif.respCat">{{categorieModif.respCat.nom}} {{categorieModif.respCat.prenom}}</option>
+              <option *ngFor="let respo of responsablesCategories" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer la catégorie</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="supprimerCategorieModal" tabindex="-1" role="dialog"
+     aria-labelledby="supprimerCategorieModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="supprimerCategorieModalLabel">Supprimer la catégorie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeDelCatModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          Voulez vous vraiment suppirmer cette catégorie?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
+          <form #fff="ngForm" name="form" (submit)="fff.form.valid && supprimerCategorie(categorieModif)" novalidate action="">
+            <button type="submit" class="btn btn-danger">OUI</button>
+          </form>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

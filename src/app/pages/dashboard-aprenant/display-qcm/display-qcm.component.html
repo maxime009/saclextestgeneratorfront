@@ -1,0 +1,57 @@
+<!--<div>
+  <ngx-counter [countValue]=duree  [limit]=temps font="cursive" theme="green"></ngx-counter>
+</div>-->
+<div>
+  <ngx-counter [(ngModel)]="duree"  [limit]=temps font="cursive" theme="green"></ngx-counter>
+</div>
+<div *ngIf="duree == temps">
+<!--
+  {{endExam()}}
+-->
+  <ngx-counter [countValue]=dureeSup  [limit]=7200 font="cursive" theme="green"></ngx-counter>
+</div>
+<form name="form" novalidate>
+  <div class="form-group" style="background-color: white">
+    <angular-editor [placeholder]="'Entrez votre question ici'"
+                    name="libelle"
+                    [(ngModel)]="questionReponse.eqr.quest.libelle" 
+                    ></angular-editor>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="checkbox" *ngFor="let rep of questionReponse.eqr.quest.reponses">
+        <div>
+          <label><input name="ongm" type="checkbox" value="" (click)="answerQuestion(rep)">{{rep.libelle}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="col-6" *ngIf="show">
+      <div class="checkbox" *ngFor="let rep of questionReponse.eqr.quest.reponses">
+        <div *ngIf="rep.valeur; else mauvaise" style="background-color: aquamarine">
+          <div><label><input name="ongm" type="checkbox" checked disabled value="" >{{rep.libelle}}
+          </label></div>
+          <div><textarea name="" id="a" cols="30" rows="5" disabled>{{rep.description}}</textarea></div>
+        </div>
+        <ng-template #mauvaise >
+          <div><label><input name="ongm" type="checkbox" value="" disabled>{{rep.libelle}}
+          </label></div>
+          <div><textarea name="" id="b" cols="30" rows="5" disabled>{{rep.description}}</textarea></div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 text-center">
+      <button type="submit" class="btn btn-primary" (click)="nextQuestion()"
+              *ngIf="questionActu <= questionReponses.length - 1">Suivant
+      </button>
+    </div>
+    <div  class="col-3 text-center">
+      <button class="btn btn-primary" (click)="showRightAnswer()">Voir les bonnes reponses</button>
+    </div>
+    <div  class="col-3 text-center">
+      <button type="submit" class="btn btn-primary" (click)="endExam()">Fin d'évaluation</button>
+    </div>
+  </div>
+
+</form>

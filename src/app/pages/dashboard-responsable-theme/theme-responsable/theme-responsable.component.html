@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-lg-3 card bg-transparent shadow-none border-0">
+    <a *ngFor="let theme of themerespo"  (loadstart)="getThemeDuResponsable()"
+       class="list-group-item list-group-item-action" (click)="recupererTheme(theme)">{{theme.libelle}}</a>
+  </div>
+  <div class="col-lg-9 card shadow-none">
+    <app-detail-theme *ngIf="themeChoosed" [themeChoisi]="themeChoosed"></app-detail-theme>
+    <app-list-categorie *ngIf="categories" [categories]="categories" [themeChoisi]="themeChoosed"></app-list-categorie>
+  </div>
+</div>
+

@@ -1,6 +1,7 @@
 import {TypeQuestion} from './type-question';
 import {Categorie} from './categorie';
 import {Reponse} from "./reponse";
+import {Difficulte} from './difficulte.enum';
 
 export interface Question {
   idQuestion: number;
@@ -12,4 +13,5 @@ export interface Question {
   dateCreation: Date;
   dateModification: Date;
   reponses: Reponse[];
+  difficulte: Difficulte;
 }

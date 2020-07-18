@@ -10,4 +10,7 @@ export class Evaluation {
   dateCreation: Date;
   dateModification: Date;
   user: Utilisateur;
+  intitule: string;
+  totalObtenu: number;
+  statut: StatutEval;
 }

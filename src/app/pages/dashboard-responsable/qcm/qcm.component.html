@@ -1,0 +1,333 @@
+<div class="card">
+  <h5 class="card-header">Question à choix multiple</h5>
+  <div class="card-body">
+    <h5 class="card-title">Saisisez la question dans l'éditeur et enregistrer les réponses </h5>
+    <p class="card-text"></p>
+    <form #fins="ngForm" name="form" (submit)="fins.form.valid && addQuestion()" novalidate>
+      <div class="row">
+        <div class="col-lg-6"></div>
+        <div class="form-check col-lg-6">
+          <input type="checkbox" class="form-check-input" id="remember-me">
+          <label class="form-check-label" for="remember-me">Activez la question</label>
+          <div class="small text-dark">Une fois la question activée elle peut être soumise durant une évaluation.</div>
+          <div class="small text-dark">Si vous ne l'activez pas elle sera quand même sauvegardée et pourra être activée
+            plutard</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-lg-4 col-md-4 col-sm-12">
+          <label for="score">Score</label>
+          <input type="number"
+                 class="form-control"
+                 id="score"
+                 placeholder="score"
+                 name="score"
+                 [(ngModel)]="questionModel.score"
+                 #score="ngModel"
+                 [ngClass]="{'is-invalid':fins.submitted && score.invalid}"
+                 required>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-12">
+          <label for="duree">Durée</label>
+          <input type="number"
+                 class="form-control"
+                 id="duree"
+                 placeholder="durée"
+                 name="durée"
+                 [(ngModel)]="questionModel.duree"
+                 #duree="ngModel"
+                 [ngClass]="{'is-invalid':fins.submitted && duree.invalid}"
+                 required>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-12">
+          <label for="difficulte">Difficulté</label>
+          <select [(ngModel)]="questionModel.difficulte" name="difficulte" id="difficulte" #difficulte="ngModel">
+            <option *ngFor="let key of niveauDifficulte" [value]="key" [label]="difficultes[key]"></option>
+<!--            <option *ngFor="let difficulte of niveauDifficulte" [value]="difficulte">{{difficulte}}</option>-->
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="background-color: white">
+        <angular-editor [placeholder]="'Entrez votre question ici'"
+                        name="libelle"
+                        [(ngModel)]="questionModel.libelle"
+                        #libelle="ngModel"
+                        [ngClass]="{'is-invalid':fins.submitted && libelle.invalid}"></angular-editor>
+      </div>
+      <div *ngIf="q == 0" class="text-center">
+        <button type="submit" class="btn btn-primary">Enregistrer la question</button>
+      </div>
+    </form>
+    <form #fmod="ngForm" name="form" (submit)="fmod.form.valid && modQuestion()" novalidate action="">
+      <div *ngIf="q == 1" class="text-center">
+        <button type="submit" class="btn btn-primary">Modifier la question</button>
+      </div>
+    </form>
+    <hr>
+    <!--liste des réponses
+
+    -->
+    <div *ngIf="r.length != 0">
+      <table class="table table-hover table-bordered bg-light">
+        <thead>
+        <tr>
+          <th scope="col">Réponse</th>
+          <th scope="col">Valeur</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let repo of r">
+          <td>{{repo.libelle}}</td>
+          <td>{{repo.valeur}}</td>
+          <td>
+            <div class="row">
+              <div class="col-6 text-center"><a href="" class="fa fa-pencil text-primary fa-2x" data-toggle="modal" data-target="#modifierReponseModal" (click)="recup(repo)"></a></div>
+              <div class="modal fade" id="modifierReponseModal" tabindex="-1" role="dialog" aria-labelledby="modifierReponseModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="ajoutThemeModalLabel">Modifier une réponse</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form #ff="ngForm" name="form" (submit)="ff.form.valid && modReponse()" novalidate action="">
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="form-group col-lg-8 col-md-8 col-sm-12">
+                            <label for="updateReponse">Réponse</label>
+                            <input
+                              class="form-control"
+                              id="updateReponse"
+                              placeholder="reponse"
+                              name="updateReponserep"
+                              type="text"
+                              [(ngModel)]="updateReponse.libelle"
+                              required>
+                          </div>
+                          <div class="form-group col-lg-4 col-md-4 col-sm-12">
+                            <label for="updateReponsevaleur">valeur</label>
+                            <input
+                              class="form-control"
+                              id="updateReponsevaleur"
+                              placeholder="valeur"
+                              name="updateReponsevaleur"
+                              type="number" max="1" min="0"
+                              [(ngModel)]="updateReponse.valeur"
+                              required>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-12">
+                            <label for="updateReponsedescription1">Description de la réponse</label>
+                            <textarea
+                              class="form-control"
+                              id="updateReponsedescription1" rows="3"
+                              name="updateReponselibelle"
+                              [(ngModel)]="updateReponse.description"
+                              required></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Modifier réponse</button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 text-center"><a href="" class="fa fa-trash text-danger fa-2x" data-toggle="modal" data-target="#supprimerReponseModal" (click)="recup(repo)"></a></div>
+              <!-- Modal supprimer reponse-->
+              <div class="modal fade" id="supprimerReponseModal" tabindex="-1" role="dialog"
+                   aria-labelledby="supprimerThemeModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="supprimerThemeModalLabel" data-dismiss="modal">Supprimer une réponse</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form>
+                      <div class="modal-body">
+                        Voulez vous vraiment suppirmer cette réponse?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
+                        <form #fff="ngForm" name="form" (submit)="fff.form.valid && supprimerReponse(repo)" novalidate action="">
+                          <button type="submit" class="btn btn-danger">OUI</button>
+                        </form>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="q ==1">
+      <form action="" #repform1="ngForm" name="form1" (submit)="repform1 && addListReponse()"
+            novalidate>
+        <div class="row">
+          <div class="form-group col-lg-8 col-md-8 col-sm-12">
+            <label for="reponse1">Réponse</label>
+            <input
+              class="form-control"
+              id="reponse1"
+              placeholder="reponse"
+              name="reponse1"
+              type="text"
+              [(ngModel)]="reponse1.libelle"
+              required>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-12">
+            <label for="valeur1">valeur</label>
+            <input
+              class="form-control"
+              id="valeur1"
+              placeholder="valeur"
+              name="valeur1"
+              type="number" max="1" min="0"
+              [(ngModel)]="reponse1.valeur"
+              required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <label for="description1">Description de la réponse</label>
+            <textarea
+              class="form-control"
+              id="description1" rows="3"
+              name="description1"
+              [(ngModel)]="reponse1.description"
+              required></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-lg-8 col-md-8 col-sm-12">
+            <label for="reponse2">Réponse</label>
+            <input
+              class="form-control"
+              id="reponse2"
+              placeholder="reponse"
+              name="reponse2"
+              type="text"
+              [(ngModel)]="reponse2.libelle"
+              required>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-12">
+            <label for="valeur2">valeur</label>
+            <input
+              class="form-control"
+              id="valeur2"
+              placeholder="valeur"
+              name="valeur2"
+              type="number" max="1" min="0"
+              [(ngModel)]="reponse2.valeur"
+              required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <label for="description2">Description de la réponse</label>
+            <textarea
+              class="form-control"
+              id="description2" rows="3"
+              name="description2"
+              [(ngModel)]="reponse2.description"
+              required></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-lg-8 col-md-8 col-sm-12">
+            <label for="reponse3">Réponse</label>
+            <input
+              class="form-control"
+              id="reponse3"
+              placeholder="reponse"
+              name="reponse3"
+              type="text"
+              [(ngModel)]="reponse3.libelle"
+              required>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-12">
+            <label for="valeur3">valeur</label>
+            <input
+              class="form-control"
+              id="valeur3"
+              placeholder="valeur"
+              name="valeur3"
+              type="number" max="1" min="0"
+              [(ngModel)]="reponse3.valeur"
+              required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <label for="description3">Description de la réponse</label>
+            <textarea
+              class="form-control"
+              id="description3" rows="3"
+              name="description3"
+              [(ngModel)]="reponse3.description"
+              required></textarea>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Enregistrer la réponse</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="form1 == 1">
+      <div class="text-center"> Ajoutez une nouvelle réponse</div>
+      <form action="" #repform1="ngForm" name="form1" (submit)="repform1 && addReponse1(reponse4)"
+            novalidate>
+        <div class="row">
+          <div class="form-group col-lg-8 col-md-8 col-sm-12">
+            <label for="reponse4">Réponse</label>
+            <input
+              class="form-control"
+              id="reponse4"
+              placeholder="reponse"
+              name="reponse4"
+              type="text"
+              [(ngModel)]="reponse4.libelle"
+              required>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-12">
+            <label for="valeur4">valeur</label>
+            <input
+              class="form-control"
+              id="valeur4"
+              placeholder="valeur"
+              name="valeur4"
+              type="number" max="1" min="0"
+              [(ngModel)]="reponse4.valeur"
+              required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <label for="description4">Description de la réponse</label>
+            <textarea
+              class="form-control"
+              id="description4" rows="3"
+              name="description4"
+              [(ngModel)]="reponse4.description"
+              required></textarea>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Enregistrer la réponse</button>
+        </div>
+      </form>
+  </div>
+  </div>
+</div>

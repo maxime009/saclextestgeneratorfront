@@ -1,0 +1,358 @@
+<div class="container-fluid">
+  <nav class="marge">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link text-black-50" id="nav-stat-tab" data-toggle="tab" href="#nav-stat"
+         role="tab"
+         aria-controls="nav-home" aria-selected="true">Stats</a>
+      <a class="nav-item nav-link text-black-50" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+         role="tab"
+         aria-controls="nav-home" aria-selected="true">Passer une évaluation</a>
+      <a class="nav-item nav-link active text-black-50" id="nav-question-tab" data-toggle="tab" href="#nav-question" role="tab"
+         aria-controls="nav-profile" aria-selected="false">Mes évaluations</a>
+      <a class="nav-item nav-link text-black-50" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+         aria-controls="nav-contact" aria-selected="false">Mon compte</a>
+    </div>
+  </nav>
+
+  <!-- Button trigger modal -->
+  <div class="pad"></div>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade" id="nav-stat" role="tabpanel" aria-labelledby="nav-stat-tab">
+
+      stat
+    </div>
+    <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+      <div>
+        Passer une nouvelle évaluation :
+        <button class="btn btn-primary rounded-pill" *ngIf="!formEvaluation" (click)="afficherformEvaluation()">
+          <li class="fa fa-plus text-white"></li>
+        </button>
+        <button class="btn btn-primary rounded-pill" *ngIf="formEvaluation" (click)="afficherformEvaluation()">
+          <li class="fa fa-minus text-white"></li>
+        </button>
+        <div *ngIf="formEvaluation" class="card">
+          <div class="card-body">
+            <div *ngIf="questionReponses.length == 0">
+              <div class="form-group">
+                <label for="listTheme">Choisissez le thème : </label>
+                <select name="listTheme" id="listTheme" [(ngModel)]="themeChoisi" #listTheme="ngModel"
+                        (ngModelChange)="getCategorieduTheme()">
+                  <option *ngFor="let theme of themes" [ngValue]="theme">{{theme.libelle}}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="themeChoisi">
+                <label for="listCategorie">Choisissez la catégorie : </label>
+                <select name="listCategorie" id="listCategorie" [(ngModel)]="categorieChoisi"
+                        #listCategorie="ngModel">
+                  <option *ngFor="let categorie of categories" [ngValue]="categorie">{{categorie.libelle}}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="themeChoisi">
+                <label for="temps"></label>
+                <input
+                  class="form-control"
+                  id="temps"
+                  placeholder="temps"
+                  name="temps"
+                  type="number" max="720" min="0"
+                  [(ngModel)]="temps"
+                  required>
+              </div>
+              <div class="form-group" *ngIf="themeChoisi">
+                <label for="nbQuest"></label>
+                <input
+                  class="form-control"
+                  id="nbQuest"
+                  placeholder="Nombre de Questions"
+                  name="nbQuest"
+                  type="number" max="60" min="1"
+                  [(ngModel)]="nbQuest"
+                  required>
+              </div>
+              <div *ngIf="temps && nbQuest">
+                <button class="btn btn-primary" (click)="creerEvaluation(categorieChoisi.idCategorie, nbQuest)">Passer
+                  une évaluation formative
+                </button>
+              </div>
+            </div>
+            <div *ngIf="questionReponses.length > 0">
+              <app-display-qcm [questionReponses]="questionReponses" [questionReponse]="questionReponse"
+                               [questionActu]="questionActu" [temps]="temps"
+                               (initQuestionReponses)="initQuestionReponses()"
+                               (sendResultat)="receiveRes($event)"></app-display-qcm>
+            </div>
+            <div *ngIf="questionReponses.length == 0 && resultat">
+              <div class="card">
+                <div class="card-title">Correction de votre derniière évaluation dans
+                  en {{categorieChoisi.libelle}}</div>
+                <div class="card-body">
+                  <table class="table table-hover table-bordered bg-light">
+                    <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Libelle Question</th>
+                      <th scope="col">Statut</th>
+                      <th scope="col">Points</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let res of resultat">
+                      <th scope="row">1</th>
+                      <td>{{res.quest.libelle}}</td>
+                      <td>{{res.statut}}</td>
+                      <td>
+                        {{res.quest.score}}
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade show active" id="nav-question" role="tabpanel" aria-labelledby="nav-question-tab">
+      <div class="row">
+        <div class="col-3"><div *ngFor="let eval of listEvaluations" (click)="getEvaluation(eval)">{{eval.intitule}}</div></div>
+        <div class="col-9">
+          <app-une-evaluation [evaluation]="evaluation" [listEqr]="listEqr" [moi]="moi"></app-une-evaluation>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+test
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="container-fluid">
+  <nav class="marge" >
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active text-black-50" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+         aria-controls="nav-home" aria-selected="true">Passer une évaluation</a>
+      <a class="nav-item nav-link text-black-50" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+         aria-controls="nav-profile" aria-selected="false">Mes évaluations</a>
+      <a class="nav-item nav-link text-black-50" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+         aria-controls="nav-contact" aria-selected="false">Mon compte</a>
+    </div>
+  </nav>
+
+  &lt;!&ndash; Button trigger modal &ndash;&gt;
+  <div class="pad"></div>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div>
+        Passer une nouvelle évaluation :
+        <button class="btn btn-primary rounded-pill" *ngIf="!formEvaluation" (click)="afficherformEvaluation()">
+          <li class="fa fa-plus text-white"></li>
+        </button>
+        <button class="btn btn-primary rounded-pill" *ngIf="formEvaluation" (click)="afficherformEvaluation()">
+          <li class="fa fa-minus text-white"></li>
+        </button>
+        <div *ngIf="formEvaluation" class="card">
+          <div class="card-body">
+            <div *ngIf="questionReponses.length == 0">
+              <div class="form-group">
+                <label for="listTheme">Choisissez le thème : </label>
+                <select name="listTheme" id="listTheme" [(ngModel)]="themeChoisi" #listTheme="ngModel"
+                        (ngModelChange)="getCategorieduTheme()">
+                  <option *ngFor="let theme of themes" [ngValue]="theme">{{theme.libelle}}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="themeChoisi">
+                <label for="listCategorie">Choisissez la catégorie : </label>
+                <select name="listCategorie" id="listCategorie" [(ngModel)]="categorieChoisi"
+                        #listCategorie="ngModel">
+                  <option *ngFor="let categorie of categories" [ngValue]="categorie">{{categorie.libelle}}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="themeChoisi">
+                <label for="temps"></label>
+                <input
+                  class="form-control"
+                  id="temps"
+                  placeholder="temps"
+                  name="temps"
+                  type="number" max="720" min="0"
+                  [(ngModel)]="temps"
+                  required>
+              </div>
+              <div class="form-group" *ngIf="themeChoisi">
+                <label for="nbQuest"></label>
+                <input
+                  class="form-control"
+                  id="nbQuest"
+                  placeholder="Nombre de Questions"
+                  name="nbQuest"
+                  type="number" max="60" min="1"
+                  [(ngModel)]="nbQuest"
+                  required>
+              </div>
+              <div *ngIf="temps && nbQuest">
+                <button class="btn btn-primary" (click)="creerEvaluation(categorieChoisi.idCategorie, nbQuest)">Passer
+                  une évaluation formative
+                </button>
+              </div>
+            </div>
+            <div *ngIf="questionReponses.length > 0">
+              <app-display-qcm [questionReponses]="questionReponses" [questionReponse]="questionReponse"
+                               [questionActu]="questionActu" [temps]="temps"
+                               (initQuestionReponses)="initQuestionReponses()"
+                               (sendResultat)="receiveRes($event)"></app-display-qcm>
+            </div>
+            <div *ngIf="questionReponses.length == 0 && resultat">
+              <div class="card">
+                <div class="card-title">Correction de votre derniière évaluation dans
+                  en {{categorieChoisi.libelle}}</div>
+                <div class="card-body">
+                  <table class="table table-hover table-bordered bg-light">
+                    <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Libelle Question</th>
+                      <th scope="col">Statut</th>
+                      <th scope="col">Points</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let res of resultat">
+                      <th scope="row">1</th>
+                      <td>{{res.quest.libelle}}</td>
+                      <td>{{res.statut}}</td>
+                      <td>
+                        {{res.quest.score}}
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+      <div>{{listEvaluations.length}}</div>
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+      dash
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;!&ndash;
+<div class="row">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+    <li ngbNavItem="top" class="pillbar">
+      <a ngbNavLink>Passer un test</a>
+      <ng-template ngbNavContent>
+        <div class="row">
+          <div class="col-4">
+            <div class="list-group shadow-none  scr">
+              <a *ngFor="let categorie of categories"
+                 class="list-group-item list-group-item-action"
+                 (click)="getCategorie(categorie)">{{categorie.libelle}}</a>
+            </div>
+          </div>
+          <div class="col-8">
+            <app-information-sur-ctegorie [categorieDisplay]="categorieDisplay"></app-information-sur-ctegorie>
+          </div>
+        </div>
+        <button class="btn btn-primary" (click)="creerEvaluation(2)">Passer une évaluation formative</button>
+      </ng-template>
+    </li>
+    <li ngbNavItem="middle" class="pillbar">
+      <a ngbNavLink>Middle</a>
+      <ng-template ngbNavContent>
+        Passer une nouvelle évaluation :
+        <button class="btn btn-primary rounded-pill" *ngIf="!formEvaluation" (click)="afficherformEvaluation()"><li class="fa fa-plus text-white"></li></button>
+        <button class="btn btn-primary rounded-pill" *ngIf="formEvaluation" (click)="afficherformEvaluation()"><li class="fa fa-minus text-white"></li></button>
+    <div *ngIf="formEvaluation" class="card">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="listTheme">Choisissez le thème : </label>
+          <select name="listTheme" id="listTheme" [(ngModel)]="themeChoisi" #listTheme="ngModel"
+                  (ngModelChange)="getCategorieduTheme()">
+            <option *ngFor="let theme of themes" [ngValue]="theme">{{theme.libelle}}</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="themeChoisi">
+          <label for="listCategorie">Choisissez la catégorie : </label>
+          <select name="listCategorie" id="listCategorie" [(ngModel)]="categorieChoisi"
+                  #listCategorie="ngModel">
+            <option *ngFor="let categorie of categories" [ngValue]="categorie">{{categorie.libelle}}</option>
+          </select>
+        </div>
+        <div *ngIf="categorieChoisi">
+          display la question
+        </div>
+      </div>
+    </div>
+    </ng-template>
+    </li>
+    <li ngbNavItem="bottom" class="pillbar">
+      <a ngbNavLink>Bottom</a>
+      <ng-template ngbNavContent>
+        <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
+          Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
+          Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
+          egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
+          tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
+          magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
+          neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="ml-4"></div>
+</div>
+
+<pre>Active: {{ active }}</pre>
+<app-display-qcm [questionReponses]="questionReponses" [questionReponse]="questionReponse" [questionActu]="questionActu" (messageEvent)="receiveMessage($event)"></app-display-qcm>
+&lt;!&ndash;
+<div *ngIf="questionActu>0; else debutliste">
+  <button type="submit" class="btn btn-primary" (click)="previousQuestion()" >Précédent</button>
+</div>
+<ng-template #debutliste>
+  <button type="submit" class="btn btn-primary" disabled>Précédent</button>
+</ng-template>
+<div *ngIf="questionActu == questionReponses.length - 1; else finlist">
+  <button type="submit" class="btn btn-primary" disabled>Suivant</button>
+</div>
+<ng-template #finlist>
+  <button type="submit" class="btn btn-primary" (click)="nextQuestion()">Suivant</button>
+</ng-template>
+<button type="submit" class="btn btn-primary">Fin d'évaluation</button>
+&ndash;&gt;
+
+
+&ndash;&gt;-->

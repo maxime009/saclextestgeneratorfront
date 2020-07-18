@@ -1,0 +1,73 @@
+<div class="card shadow-none">
+  <div>
+    <div style="margin-top: 7px;">
+      <h5>{{categorieDisplay.libelle}}</h5>
+      <h5 class="">Responsable : {{categorieDisplay.respCat.nom}} {{categorieDisplay.respCat.prenom}}</h5>
+      <h6 class=" mb-2 text-muted">Présentation du responsable : {{categorieDisplay.respCat.description}}</h6>
+      <p>Description de la catégorie : {{categorieDisplay.description}}</p>
+    </div>
+    <!--<app-un-theme></app-un-theme>-->
+    <div class="row" style="margin-bottom: 10px">
+      <div class="col-3"></div>
+      <div class="col-3">
+        <button type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#passerEvaluationModal">
+          Passer une évaluation
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="passerEvaluationModal" tabindex="-1" role="dialog"
+           aria-labelledby="passerEvaluationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="passerEvaluationModalLabel">Configurer votre évaluation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+<!--
+            <form #ff="ngForm" name="form" (submit)="ff.form.valid && modifierTheme()" novalidate action="">
+              <div class="modal-body">
+
+                <div class="form-group">
+                  <label for="libelle">Nom du thème</label>
+                  <input type="text"
+                         class="form-control"
+                         placeholder="Nom du theme"
+                         id="libelle"
+                         name="libelle"
+                         #libelle="ngModel"
+                         [(ngModel)]="themeModif.libelle"
+                         [ngClass]="{'is-invalid': ff.submitted && libelle.invalid}"
+                         required>
+                </div>
+
+                <div class="form-group">
+                  <label for="description">Description du thème</label>
+                  <textarea
+                    class="form-control"
+                    id="description" rows="3"
+                    name="description"
+                    [(ngModel)]="themeModif.description"
+                    #description="ngModel"
+                    [ngClass]="{'is-invalid': ff.submitted && description.invalid}"
+                    required></textarea>
+                  <div *ngIf="ff.submitted && description.invalid" class="invalid-input">
+                    <div *ngIf="description.errors?.required">La description est invalid</div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary">Enregistrer thème</button>
+              </div>
+            </form>
+-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

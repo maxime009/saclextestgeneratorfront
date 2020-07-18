@@ -1,0 +1,84 @@
+<div class="card">
+  <h5 class="card-header text-center">Question à trou</h5>
+  <div class="card-body">
+    <h5 class="card-title">Saisisez la question dans l'éditeur et enregistrer les réponses</h5>
+    <p class="card-text"></p>
+    <form #fins="ngForm" name="form" (submit)="fins.form.valid && addQuestion()" novalidate>
+      <div class="row">
+        <div class="col-lg-6"></div>
+        <div class="form-check col-lg-6">
+          <input type="checkbox" class="form-check-input" id="remember-me">
+          <label class="form-check-label" for="remember-me">Activez la question</label>
+          <div class="small text-dark">Une fois la question activée elle peut être soumise durant une évaluation.</div>
+          <div class="small text-dark">Si vous ne l'activez pas elle sera quand même sauvegardée et pourra être activée
+            plutard</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+          <label for="score">Score</label>
+          <input type="number"
+                 class="form-control"
+                 id="score"
+                 placeholder="score"
+                 name="score"
+                 [(ngModel)]="questionModel.score"
+                 #score="ngModel"
+                 [ngClass]="{'is-invalid':fins.submitted && score.invalid}"
+                 required>
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+          <label for="duree">Durée</label>
+          <input type="number"
+                 class="form-control"
+                 id="duree"
+                 placeholder="durée"
+                 name="durée"
+                 [(ngModel)]="questionModel.duree"
+                 #duree="ngModel"
+                 [ngClass]="{'is-invalid':fins.submitted && duree.invalid}"
+                 required>
+        </div>
+      </div>
+      <div class="form-group" style="background-color: white">
+        <angular-editor [placeholder]="'Entrez votre question ici'"
+                        name="libelle"
+                        [(ngModel)]="questionModel.libelle"
+                        #libelle="ngModel"
+                        [ngClass]="{'is-invalid':fins.submitted && libelle.invalid}"></angular-editor>
+      </div>
+      <div *ngIf="q == 0" class="text-center">
+        <button type="submit" class="btn btn-primary">Enregistrer la question</button>
+      </div>
+    </form>
+    <form #fmod="ngForm" name="form" (submit)="fmod.form.valid && modQuestion()" novalidate action="">
+      <div *ngIf="q == 1" class="text-center">
+        <button type="submit" class="btn btn-primary">Modifier la question</button>
+      </div>
+    </form>
+    <hr>
+    <!--liste des réponses
+
+    -->
+    <div *ngIf="ck.length != 0">
+      <div *ngFor="let k of ck">
+        <form #fins="ngForm" name="form" (submit)="fins.form.valid && addReponse()" novalidate action="">
+          <div class="form-group col-lg-6 col-md-6 col-sm-12">
+            <label for="libelleRep">Réponse</label>
+            <input type="text"
+                   class="form-control"
+                   id="libelleRep"
+                   placeholder="score"
+                   name="libelleRep"
+                   [(ngModel)]="reponse"
+                   required>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Enregistrer la réponse</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

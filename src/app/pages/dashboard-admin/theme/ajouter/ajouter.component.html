@@ -48,7 +48,7 @@
               </div>
               <div class="form-group">
                 <label for="responsableTheme"></label>
-                <select name="responsableTheme" id="responsableTheme" [(ngModel)]="themeModel.utilisateur" #responsableTheme="ngModel" >
+                <select name="responsableTheme" id="responsableTheme" #responsableTheme="ngModel" [(ngModel)]="themeModel.utilisateur" >
                   <option *ngFor="let respo of responsablesThemes" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
                 </select>
               </div>

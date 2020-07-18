@@ -1,0 +1,68 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <div>Nom et prénom: {{moi.nom}} {{moi.prenom}}</div>
+        <div>Type de l'évaluation: {{evaluation.typeEvaluation}}</div>
+        <div>Catégorie: {{evaluation.intitule}}</div>
+        <div>Date: {{evaluation.dateCreation}}</div>
+      </div>
+      <div class="col-6">
+        <div>Total: {{evaluation.total}}</div>
+        <div>Total obtenue: {{evaluation.totalObtenu}}</div>
+        <div>Pourcentage de réussite: {{pourcentageReussite}}</div>
+        <div>Statut: {{evaluation.statut}}</div>
+      </div>
+    </div>
+    <div *ngFor="let eqr of listEqr">
+      <a class=" btn btn-link btn-block text-left" type="button"
+         [href]="'#collapseOne' + eqr.id"
+                                        data-toggle="collapse" aria-expanded="true"
+                                        aria-controls="collapseOne" >
+      {{eqr.quest.libelle}}
+    </a>
+      <div class="collapse" id="collapseOne" [id]="'collapseOne'+ eqr.id" aria-labelledby="headingOne"
+           data-parent="#accordionExample">
+        <div class="card-body">
+          <!--<div class="row">
+            <div class="col-6">
+              <table class="table table-hover table-bordered bg-light">
+                <thead>
+                <tr>
+                  <th scope="col">Réponse</th>
+                  <th scope="col">Valeur</th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let repo of eqr.quest.reponses">
+                  <td>{{repo.libelle}}</td>
+                  <td>{{repo.valeur}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-6">
+              <table class="table table-hover table-bordered bg-light">
+                <thead>
+                <tr>
+                  <th scope="col">Réponse</th>
+                  <th scope="col">Valeur</th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let repo of eqr.repEval">
+                  <td>{{repo.rep.libelle}}</td>
+                  <td>{{repo.rep.valeur}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
