@@ -4,9 +4,7 @@ import {Question} from '../../../models/question';
 import {QuestionReponse} from '../../../models/question-reponse';
 import {Reponse} from '../../../models/reponse';
 import {ReponseEval} from '../../../models/reponse-eval';
-import {FormGroup} from "@angular/forms";
-import {StatutEval} from "../../../models/statu-eval.enum";
-import * as moment from 'moment';
+import {FormGroup} from '@angular/forms';
 import {EvaluationService} from '../../../appl/evaluation.service';
 
 
@@ -16,9 +14,9 @@ import {EvaluationService} from '../../../appl/evaluation.service';
   styleUrls: ['./display-qcm.component.css']
 })
 export class DisplayQCMComponent implements OnInit {
-  go = 'hjhf';
+  /*go = 'hjhf';
 
-  public count = 1;
+  public count = 1;*/
 
   constructor(private evaluationService: EvaluationService) {
   }
@@ -47,14 +45,16 @@ export class DisplayQCMComponent implements OnInit {
     eval: null,
     quest: this.questionModel,
     statut: null,
-    tempMis: null
+    tempMis: null,
+    repEval: null
   };
   e: EvalQuestRep = {
     id: null,
     eval: null,
     quest: this.questionModel,
     statut: null,
-    tempMis: null
+    tempMis: null,
+    repEval: null
   };
 
   @Input() questionReponses: QuestionReponse[] = new Array(0);
@@ -62,8 +62,8 @@ export class DisplayQCMComponent implements OnInit {
     eqr : this.e,
     reponses : null
   };
-  @Output('initQuestionReponses') initQuestionReponses: EventEmitter<any> = new EventEmitter();
-  @Output() sendResultat = new EventEmitter<EvalQuestRep>()
+  @Output() initQuestionReponses: EventEmitter<any> = new EventEmitter();
+  @Output() sendResultat = new EventEmitter<EvalQuestRep>();
   @Input() temps: number;
   @Input() questionActu: number;
   show = false;
@@ -86,16 +86,11 @@ export class DisplayQCMComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  repondre() {
-    return false;
-  }
-
-
   nextQuestion() {
     this.show = false;
     for (let i = 0; i < this.questionReponse.eqr.quest.reponses.length; i++) {
       if (this.questionReponse.eqr.quest.reponses[i].choisi) {
-        let repEval = new ReponseEval();
+        const repEval = new ReponseEval();
         repEval.evalId = this.questionReponse.eqr;
         repEval.rep = this.questionReponse.eqr.quest.reponses[i];
         console.log(repEval);
@@ -110,14 +105,14 @@ export class DisplayQCMComponent implements OnInit {
       this.questionActu -= 1;
     } else {
        this.questionReponse = this.questionReponses[this.questionActu];
-       this.questionReponse.eqr.quest.reponses = this.shufleRep(this.questionReponse.eqr.quest.reponses);
+       this.questionReponse.eqr.quest.reponses = DisplayQCMComponent.shufleRep(this.questionReponse.eqr.quest.reponses);
      }
   }
 
   previousQuestion() {
     for (let i = 0; i < this.questionReponse.eqr.quest.reponses.length; i++) {
       if (this.questionReponse.eqr.quest.reponses[i].choisi) {
-        let repEval = new ReponseEval();
+        const repEval = new ReponseEval();
         repEval.evalId = this.questionReponse.eqr;
         repEval.rep = this.questionReponse.eqr.quest.reponses[i];
         this.questionReponses[this.questionActu].reponses.push(repEval);
@@ -166,32 +161,14 @@ export class DisplayQCMComponent implements OnInit {
       }
     }*/
 
-    answerQuestion(reponse: Reponse): Reponse{
+    answerQuestion(reponse: Reponse){
       reponse.choisi = !reponse.choisi;
-
       return reponse;
-      console.log(this.questionReponse);
-      console.log(reponse);
     }
 
 
   showRightAnswer() {
     this.show = true;
-  }
-
-  counter(){
-      return false;
-  }
-
-  shufleRep(listRep: Reponse[]){
-      var m = listRep.length, t, i;
-      while (m){
-        i = Math.floor(Math.random() * m--);
-        t = listRep[m];
-        listRep[m] = listRep[i];
-        listRep[i] = t;
-      }
-      return listRep;
   }
   // recuperer les bonnes réponses
   /*testRep(){
@@ -202,4 +179,14 @@ export class DisplayQCMComponent implements OnInit {
     }
   }*/
 
+  private static shufleRep(reponses: Reponse[]) {
+    let m = reponses.length, t, i;
+    while (m){
+      i = Math.floor(Math.random() * m--);
+      t = reponses[m];
+      reponses[m] = reponses[i];
+      reponses[i] = t;
+    }
+    return reponses;
+  }
 }

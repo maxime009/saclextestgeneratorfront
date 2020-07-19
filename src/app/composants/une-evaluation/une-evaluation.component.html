@@ -15,51 +15,61 @@
       </div>
     </div>
     <div *ngFor="let eqr of listEqr">
-      <a class=" btn btn-link btn-block text-left" type="button"
-         [href]="'#collapseOne' + eqr.id"
-                                        data-toggle="collapse" aria-expanded="true"
-                                        aria-controls="collapseOne" >
-      {{eqr.quest.libelle}}
-    </a>
-      <div class="collapse" id="collapseOne" [id]="'collapseOne'+ eqr.id" aria-labelledby="headingOne"
-           data-parent="#accordionExample">
-        <div class="card-body">
-          <!--<div class="row">
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <a class="btn btn-link btn-block text-left" type="button" [href]="'#collapseOne' + eqr.id"
+                      data-toggle="collapse" aria-expanded="false"
+                      aria-controls="collapseOne">
+                {{eqr.quest.libelle}}
+              </a>
+            </h2>
+          </div>
+          <div class="collapse" [id]="'collapseOne'+ eqr.id" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              <div class="row">
             <div class="col-6">
+              <div class="h6 text-center">Réponse de la question</div>
               <table class="table table-hover table-bordered bg-light">
                 <thead>
                 <tr>
                   <th scope="col">Réponse</th>
+                  <th scope="col">Description</th>
                   <th scope="col">Valeur</th>
-                  <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let repo of eqr.quest.reponses">
                   <td>{{repo.libelle}}</td>
+                  <td>{{repo.description}}</td>
                   <td>{{repo.valeur}}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
             <div class="col-6">
+              <div class="h6 text-center">Response soumis par vous</div>
               <table class="table table-hover table-bordered bg-light">
                 <thead>
                 <tr>
                   <th scope="col">Réponse</th>
+                  <th scope="col">Description</th>
                   <th scope="col">Valeur</th>
-                  <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let repo of eqr.repEval">
                   <td>{{repo.rep.libelle}}</td>
+                  <td>{{repo.rep.description}}</td>
                   <td>{{repo.rep.valeur}}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
-          </div>-->
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

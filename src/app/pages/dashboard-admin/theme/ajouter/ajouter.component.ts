@@ -40,6 +40,8 @@ export class AjouterComponent implements OnInit {
       import { ViewChild, ElementRef} from '@angular/core';
       @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
       this.closeAddExpenseModal.nativeElement.click();
+      import { ViewChild, ElementRef} from '@angular/core';
+
     }*/
   }
 
@@ -70,6 +72,8 @@ export class AjouterComponent implements OnInit {
         alert('error gettx user');
       }
     );
+      @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
+    this.closeAddExpenseModal.nativeElement.click();
   }*/
   getRespo(responsablesTheme: Utilisateur) {
     console.log(responsablesTheme);

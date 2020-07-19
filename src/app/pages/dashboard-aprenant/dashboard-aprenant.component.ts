@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {EvaluationService} from "../../appl/evaluation.service";
-import {QuestionReponse} from "../../models/question-reponse";
+import {EvaluationService} from '../../appl/evaluation.service';
+import {QuestionReponse} from '../../models/question-reponse';
 import {Evaluation} from '../../models/evaluation';
-import {TypeEvaluation} from "../../models/type-evaluation";
-import {Utilisateur} from "../../models/utilisateur";
-import {StatutEval} from "../../models/statu-eval.enum";
+import {Utilisateur} from '../../models/utilisateur';
+import {StatutEval} from '../../models/statu-eval.enum';
 import {UtilisateursService} from '../../appl/utilisateurs.service';
-import {StgService} from "../../appl/stg.service";
-import {ResultatEvaluation} from "../../models/resultat-evaluation";
-import {EvalQuestRep} from "../../models/eval-quest-rep";
-import {Reponse} from "../../models/reponse";
-import {ReponseEval} from "../../models/reponse-eval";
-import {CategorieService} from "../../appl/categorie.service";
-import {Categorie} from "../../models/categorie";
+import {StgService} from '../../appl/stg.service';
+import {ResultatEvaluation} from '../../models/resultat-evaluation';
+import {EvalQuestRep} from '../../models/eval-quest-rep';
+import {Reponse} from '../../models/reponse';
+import {ReponseEval} from '../../models/reponse-eval';
+import {CategorieService} from '../../appl/categorie.service';
+import {Categorie} from '../../models/categorie';
 import {ThemeService} from '../../appl/theme.service';
 import {Theme} from '../../models/theme';
 
@@ -22,6 +21,11 @@ import {Theme} from '../../models/theme';
   styleUrls: ['./dashboard-aprenant.component.css']
 })
 export class DashboardAprenantComponent implements OnInit {
+  constructor(private evaluationService: EvaluationService,
+              private utilisateurService: UtilisateursService,
+              private stg: StgService,
+              private categorieService: CategorieService,
+              private themeService: ThemeService) { }
 
   resultatEvaluation: ResultatEvaluation = {
     eqr : new Array(0),
@@ -36,13 +40,7 @@ export class DashboardAprenantComponent implements OnInit {
   categorieChoisi: Categorie;
   nbQuest: number;
   resultat: EvalQuestRep[];
-  private personConnected: Utilisateur;
   listEqr: EvalQuestRep[];
-  constructor(private evaluationService: EvaluationService,
-              private utilisateurService: UtilisateursService,
-              private stg: StgService,
-              private categorieService: CategorieService,
-              private themeService: ThemeService) { }
   active = 'top';
   eval: Evaluation = {
     idEvaluation: null,
@@ -73,6 +71,17 @@ export class DashboardAprenantComponent implements OnInit {
   statut: StatutEval.Reussi;
   listEvaluations: Evaluation[] = new Array(0);
   evaluation: Evaluation;
+
+  public shufleRep(listRep: Reponse[]){
+    let m = listRep.length, t, i;
+    while (m){
+      i = Math.floor(Math.random() * m--);
+      t = listRep[m];
+      listRep[m] = listRep[i];
+      listRep[i] = t;
+    }
+    return listRep;
+  }
 
 
   ngOnInit(): void {
@@ -117,8 +126,8 @@ export class DashboardAprenantComponent implements OnInit {
   }
 
   getConnectedUser(): void{
-    let personne = localStorage.getItem('moi');
-    let pers = JSON.parse(personne);
+    const personne = localStorage.getItem('moi');
+    const pers = JSON.parse(personne);
     this.moi = pers;
     /*const y: number = + localStorage.getItem('id');
     this.stg.getUnUserService(y).subscribe(
@@ -134,6 +143,7 @@ export class DashboardAprenantComponent implements OnInit {
 
   initQuestionReponses(){
     this.questionReponses = new Array(0);
+    this.getMesEvaluation();
     // this.resultat ;
   }
 
@@ -206,17 +216,6 @@ export class DashboardAprenantComponent implements OnInit {
         alert('error gettx categorie du theme');
       }
     );
-  }
-
-  shufleRep(listRep: Reponse[]){
-    var m = listRep.length, t, i;
-    while (m){
-      i = Math.floor(Math.random() * m--);
-      t = listRep[m];
-      listRep[m] = listRep[i];
-      listRep[i] = t;
-    }
-    return listRep;
   }
 
   getEvaluation(e: Evaluation) {

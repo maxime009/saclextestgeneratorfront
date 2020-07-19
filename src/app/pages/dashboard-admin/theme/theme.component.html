@@ -22,7 +22,7 @@
     <div>
       <div style="margin-top: 7px;">
         <h5>{{themeChoisi.libelle}}</h5>
-        <h5 class="">Responsable : {{themeChoisi.utilisateur.nom}} {{themeChoisi.utilisateur.prenom}}</h5>
+        <h5 class="">Responsable : <div *ngIf="themeChoisi.utilisateur">{{themeChoisi.utilisateur.nom}} {{themeChoisi.utilisateur.prenom}}</div></h5>
         <h6 class=" mb-2 text-muted">PHD in Data Base Administration at university of Cleveland</h6>
         <div class="row ">
 

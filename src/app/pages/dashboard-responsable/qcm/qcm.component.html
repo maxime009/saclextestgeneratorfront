@@ -88,7 +88,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="ajoutThemeModalLabel">Modifier une réponse</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModRepModal>
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
@@ -148,7 +148,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="supprimerThemeModalLabel" data-dismiss="modal">Supprimer une réponse</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeSupRepModal>
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
@@ -287,7 +287,7 @@
     </div>
     <div *ngIf="form1 == 1">
       <div class="text-center"> Ajoutez une nouvelle réponse</div>
-      <form action="" #repform1="ngForm" name="form1" (submit)="repform1 && addReponse1(reponse4)"
+      <form action="" #repform1="ngForm" name="form1" (submit)="repform1 && addReponse1()"
             novalidate>
         <div class="row">
           <div class="form-group col-lg-8 col-md-8 col-sm-12">

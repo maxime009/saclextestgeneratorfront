@@ -65,7 +65,7 @@
             </select>
           </div>
           <div *ngIf="categorieChoisi2">
-            <app-list-question [listeDeQuestion]="listeDeQuestion" (getQuestiondeCategorie)="getQuestiondeCategorie()"></app-list-question>
+            <app-list-question [listeDeQuestion]="listeDeQuestion" [categorieChoisi2]="categorieChoisi2" (getQuestiondeCategorie)="getQuestiondeCategorie()"></app-list-question>
           </div>
         </div>
       </div>

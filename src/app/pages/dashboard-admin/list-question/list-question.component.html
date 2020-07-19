@@ -151,10 +151,10 @@
                           <div class="modal-body">
                             <div class="row">
                               <div class="form-group col-lg-8 col-md-8 col-sm-12">
-                                <label for="updateReponse">Réponse!</label>
+                                <label>Réponse</label>
                                 <input
                                   class="form-control"
-                                  id="updateReponse"
+                                  [id]="'updateReponse' + updateReponse.idReponse"
                                   placeholder="reponse"
                                   name="updateReponserep"
                                   type="text"
@@ -228,97 +228,6 @@
           </table>
         </div>
       </div>
-
-      <!--<div class="row">
-        <div class="col-6 text-center"><a href="" class="fa fa-pencil text-primary fa-2x" data-toggle="modal" data-target="#modifierReponseModal" ></a></div>
-        <div class="modal fade" id="modifierReponseModal" tabindex="-1" role="dialog" aria-labelledby="modifierReponseModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="ajoutThemeModalLabel">Modifier une réponse</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-&lt;!&ndash;
-              <form #ff="ngForm" name="form" (submit)="ff.form.valid && modReponse()" novalidate action="">
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="form-group col-lg-8 col-md-8 col-sm-12">
-                      <label for="updateReponse">Réponse</label>
-                      <input
-                        class="form-control"
-                        id="updateReponse"
-                        placeholder="reponse"
-                        name="updateReponserep"
-                        type="text"
-                        [(ngModel)]="updateReponse.libelle"
-                        required>
-                    </div>
-                    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-                      <label for="updateReponsevaleur">valeur</label>
-                      <input
-                        class="form-control"
-                        id="updateReponsevaleur"
-                        placeholder="valeur"
-                        name="updateReponsevaleur"
-                        type="number" max="1" min="0"
-                        [(ngModel)]="updateReponse.valeur"
-                        required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-12">
-                      <label for="updateReponsedescription1">Description de la réponse</label>
-                      <textarea
-                        class="form-control"
-                        id="updateReponsedescription1" rows="3"
-                        name="updateReponselibelle"
-                        [(ngModel)]="updateReponse.description"
-                        required></textarea>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                  <button type="submit" class="btn btn-primary" data-dismiss="modal">Modifier réponse</button>
-                </div>
-              </form>
-&ndash;&gt;
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 text-center"><a href="" class="fa fa-trash text-danger fa-2x" data-toggle="modal" data-target="#supprimerReponseModal" ></a></div>
-        &lt;!&ndash; Modal supprimer reponse&ndash;&gt;
-        <div class="modal fade" id="supprimerReponseModal" tabindex="-1" role="dialog"
-             aria-labelledby="supprimerThemeModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="supprimerThemeModalLabel" data-dismiss="modal">Supprimer une réponse</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-&lt;!&ndash;
-              <form>
-                <div class="modal-body">
-                  Voulez vous vraiment suppirmer cette réponse?
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
-                  <form #fff="ngForm" name="form" (submit)="fff.form.valid && supprimerReponse(repo)" novalidate action="">
-                    <button type="submit" class="btn btn-danger">OUI</button>
-                  </form>
-                </div>
-              </form>
-&ndash;&gt;
-            </div>
-          </div>
-        </div>
-      </div>-->
     </td>
   </tr>
   </tbody>

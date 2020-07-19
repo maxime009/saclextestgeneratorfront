@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef} f
 import {Question} from '../../../models/question';
 import {Reponse} from '../../../models/reponse';
 import {StgService} from '../../../appl/stg.service';
+import {Categorie} from '../../../models/categorie';
 
 @Component({
   selector: 'app-list-question',
@@ -14,6 +15,7 @@ export class ListQuestionComponent implements OnInit {
   constructor(private stgService: StgService) { }
 
   @Input() listeDeQuestion: Question[] = new Array(0);
+  @Input() categorieChoisi2: Categorie;
   @Output('getQuestiondeCategorie') getQuestiondeCategorie: EventEmitter<any> = new EventEmitter();
   @ViewChild('closeModRepModal') closeModRepModal: ElementRef;
   @ViewChild('closeDelRepModal') closeDelRepModal: ElementRef;
@@ -32,7 +34,7 @@ export class ListQuestionComponent implements OnInit {
 
   modReponse() {
     this.updateReponse.question_associee = this.questionModel;
-    this.stgService.modifReponse(this.updateReponse).subscribe(
+    this.stgService.modifReponse2(this.updateReponse).subscribe(
       res => {
         this.getQuestiondeCategorie.emit();
         this.closeModRepModal.nativeElement.click();
@@ -62,6 +64,7 @@ export class ListQuestionComponent implements OnInit {
 
   modQuestion() {
     console.log(this.questionModel);
+    this.questionModel.categorie = this.categorieChoisi2;
     this.stgService.modifQuestion(this.questionModel).subscribe(
       res => {
         this.getQuestiondeCategorie.emit();

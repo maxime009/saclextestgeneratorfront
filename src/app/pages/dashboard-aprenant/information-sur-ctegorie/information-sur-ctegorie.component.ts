@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Categorie} from "../../../models/categorie";
-import {Evaluation} from "../../../models/evaluation";
+import {Categorie} from '../../../models/categorie';
+import {Evaluation} from '../../../models/evaluation';
 
 @Component({
   selector: 'app-information-sur-ctegorie',
@@ -26,7 +26,9 @@ export class InformationSurCtegorieComponent implements OnInit {
     dateCreation: null,
     dateModification: null,
     user: null,
-    intitule: null
+    intitule: null,
+    totalObtenu: null,
+    statut: null
   };
 
 

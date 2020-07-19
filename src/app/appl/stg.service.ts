@@ -43,6 +43,7 @@ export class StgService {
   private modQuest = this.base + 'question/modifierQuestion';
   private addRep = this.base + 'reponse/creerReponse';
   private modRep = this.base + 'reponse/modifierReponse';
+  private modRepb = this.base + 'reponse/modifierReponse';
   private delRep = this.base + 'reponse/supprimerReponse/';
   private delQuest = this.base + 'question/supprimerQuestion/';
   private addlistRep = this.base + 'reponse/savereponses';
@@ -121,6 +122,11 @@ export class StgService {
   modifReponse(updateReponse: Reponse): Observable<Reponse> {
     console.log(updateReponse);
     return this.http.put<Reponse>(this.modRep, updateReponse);
+  }
+
+  modifReponse2(updateReponse: Reponse): Observable<Reponse> {
+    console.log(updateReponse);
+    return this.http.put<Reponse>(this.modRepb, updateReponse);
   }
 
   deleteReponse(idReponse: number) {

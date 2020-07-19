@@ -5,6 +5,8 @@ import {Reponse} from '../../../models/reponse';
 import {Categorie} from '../../../models/categorie';
 import {Role} from "../../../models/role";
 import {Difficulte} from '../../../models/difficulte.enum';
+import { ViewChild, ElementRef} from '@angular/core';
+
 
 
 @Component({
@@ -121,11 +123,17 @@ export class QCMComponent implements OnInit {
   //public labelDifficulte = labelDifficulte;
   difficultes = Difficulte;
   public niveauDifficulte = [];
+  @ViewChild('closeModRepModal') closeModRepModal: ElementRef;
+  @ViewChild('closeSupRepModal') closeSupRepModal: ElementRef;
 
-  addReponse1(rep: Reponse): void{
-    rep.question_associee = this.questionModel;
-    console.log(rep);
-    this.stgService.addRepons(rep).subscribe(
+  ngOnInit(): void {
+    this.niveauDifficulte = Object.keys(this.difficultes);
+    console.log(this.niveauDifficulte);
+  }
+
+  addReponse1(): void{
+    this.reponse4.question_associee = this.questionModel;
+    this.stgService.addRepons(this.reponse4).subscribe(
       res => {
         this.form1 = 1;
         alert('réponse sauvegardée');
@@ -177,10 +185,6 @@ export class QCMComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-  this.niveauDifficulte = Object.keys(this.difficultes);
-  console.log(this.niveauDifficulte);
-  }
   addQuestion(): void{
     this.questionModel.categorie = this.categorie;
     console.log(this.ck);
@@ -212,9 +216,11 @@ export class QCMComponent implements OnInit {
   }
 
   modReponse() {
+    this.updateReponse.question_associee = this.questionModel
     this.stgService.modifReponse(this.updateReponse).subscribe(
       res => {
-        alert('réponse modifiée');
+        this.closeModRepModal.nativeElement.click();
+        this.getRep();
         //this.getRep();
       },
       err => {
@@ -231,7 +237,7 @@ export class QCMComponent implements OnInit {
   supprimerReponse(repo: Reponse) {
     this.stgService.deleteReponse(repo.idReponse).subscribe(
       res => {
-        alert('réponse supprimée');
+        this.closeSupRepModal.nativeElement.click();
         this.getRep();
       },
       err => {
