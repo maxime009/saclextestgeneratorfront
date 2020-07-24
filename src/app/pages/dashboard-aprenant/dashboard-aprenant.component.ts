@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, PipeTransform} from '@angular/core';
 import {EvaluationService} from '../../appl/evaluation.service';
 import {QuestionReponse} from '../../models/question-reponse';
 import {Evaluation} from '../../models/evaluation';
@@ -14,32 +14,82 @@ import {CategorieService} from '../../appl/categorie.service';
 import {Categorie} from '../../models/categorie';
 import {ThemeService} from '../../appl/theme.service';
 import {Theme} from '../../models/theme';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {DecimalPipe} from '@angular/common';
+import {startWith} from 'rxjs/internal/operators/startWith';
+import {map} from 'rxjs/operators';
 
+// @ts-ignore
 @Component({
   selector: 'app-dashboard-aprenant',
   templateUrl: './dashboard-aprenant.component.html',
   styleUrls: ['./dashboard-aprenant.component.css']
+  //providers: [DecimalPipe]
 })
+/*function search(text: string, pipe: PipeTransform): Evaluation[] {
+  return this.listEvaluations.filter(evaluation => {
+    const term = text.toLowerCase();
+    return evaluation.intitule.toLowerCase().includes(term);
+  });*/
+// }
 export class DashboardAprenantComponent implements OnInit {
+  lesEval: Evaluation[] =new Array(0);
+
+
   constructor(private evaluationService: EvaluationService,
               private utilisateurService: UtilisateursService,
               private stg: StgService,
               private categorieService: CategorieService,
-              private themeService: ThemeService) { }
+              private themeService: ThemeService) {
+    const y: number = + localStorage.getItem('id');
+    const evalua = evaluationService.mesEvaluations(y);
+    evalua.subscribe(
+      res => {
+        this.lesEval = res;
+        console.log(this.lesEval);
+        this.refreshEval();
+      },
+      error1 => {}
+    );
+    console.log(this.lesEval);
+    this.getMesEvaluation();
+    console.log(this.listEvaluations);
+    this.refreshEval();
+    console.log(this.listEvaluations);
 
+  }
+  // countries$: Observable<Evaluation[]>;
+  /*
+  this.listEvaluations = this.filter.valueChanges.pipe(
+      startWith(''),
+      map(text => search(text, pipe))
+    );
+    filter = new FormControl('');
+  listEvaluations: Observable<Evaluation[]>;
+*/
+  listEvaluations: Evaluation[] = new Array(0);
   resultatEvaluation: ResultatEvaluation = {
-    eqr : new Array(0),
-    reponses : new Array(0)
+    evalQuestReps : new Array(0),
+    evaluation : null
   };
+  page = 1;
+  pageSize = 4;
+  collectionSize = this.listEvaluations.length;
+  evalus: Evaluation[];
+  creer = true;
+  composer = false;
+  rapport = false;
   moi: Utilisateur;
   g: any;
-  go = 'hello';
+  echoue = 'Echoue';
+  reussi = 'Reussi';
   test  =  2;
   themes: Theme[] = new Array(0);
   themeChoisi: Theme;
   categorieChoisi: Categorie;
   nbQuest: number;
-  resultat: EvalQuestRep[];
+  resultat: ResultatEvaluation;
   listEqr: EvalQuestRep[];
   active = 'top';
   eval: Evaluation = {
@@ -51,7 +101,9 @@ export class DashboardAprenantComponent implements OnInit {
     user: this.moi,
     intitule: null,
     totalObtenu: null,
-    statut: null
+    statut: null,
+    tempsApprenant: null,
+    tempsEvaluation: null
   };
   questionReponses: QuestionReponse[] = new Array(0);
   questionReponse: QuestionReponse;
@@ -65,12 +117,11 @@ export class DashboardAprenantComponent implements OnInit {
   categorieDisplay: Categorie;
   formEvaluation = false;
   temps: number;
-  reussi = StatutEval.Reussi;
-  echoue = StatutEval.Echoue;
   star: StatutEval;
   statut: StatutEval.Reussi;
-  listEvaluations: Evaluation[] = new Array(0);
   evaluation: Evaluation;
+
+
 
   public shufleRep(listRep: Reponse[]){
     let m = listRep.length, t, i;
@@ -92,7 +143,13 @@ export class DashboardAprenantComponent implements OnInit {
     this.getThemes();
     this.getMesEvaluation();
   }
-
+  refreshEval() {
+    console.log(this.lesEval);
+    console.log(this.listEvaluations);
+    this.evalus = this.listEvaluations
+      .map((evaluation, i) => ({id: i + 1, ...evaluation}))
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
   listCategorie(){
     this.categorieService.getAllCategorie().subscribe(
       res => {
@@ -159,6 +216,8 @@ export class DashboardAprenantComponent implements OnInit {
 
   receiveRes($event){
     this.resultat = $event;
+    this.creer = false;
+    console.log(this.resultat);
   }
 
   getMesEvaluation(){
@@ -168,8 +227,6 @@ export class DashboardAprenantComponent implements OnInit {
         this.listEvaluations = res;
         this.evaluation = this.listEvaluations[0];
         this.getEqrDeEvaluation(this.evaluation.idEvaluation);
-        console.log(this.listEqr);
-        console.log(this.evaluation);
       },
       err => {
         alert('error gettx evaluations');
@@ -181,6 +238,7 @@ export class DashboardAprenantComponent implements OnInit {
     this.evaluationService.eqrEvaluation(idEvaluation).subscribe(
       res => {
         this.listEqr = res;
+        console.log(this.listEqr);
         },
       err => {
         alert('error gettx eqr');
@@ -221,5 +279,10 @@ export class DashboardAprenantComponent implements OnInit {
   getEvaluation(e: Evaluation) {
     this.evaluation = e;
     this.getEqrDeEvaluation(e.idEvaluation);
+  }
+
+  newExam(){
+    this.resultat = null;
+    this.creer = true;
   }
 }

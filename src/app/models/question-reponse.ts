@@ -7,7 +7,7 @@ export class QuestionReponse {
       eval: null,
       quest: null,
     statut: null,
-    tempMis: null,
+    tempsMis: null,
     repEval: null
     };
   reponses: ReponseEval[] = new Array(0);

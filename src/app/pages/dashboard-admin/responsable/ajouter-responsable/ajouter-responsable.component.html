@@ -7,66 +7,81 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ajoutThemeModalLabel">Ajouter un Responsable</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="ajoutThemeModalLabel">Ajouter un Responsable de Thème</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeAddRespoTModal>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form #ff="ngForm" name="form" (submit)="ff.form.valid && saveResponsable()" novalidate action="">
-        <div class="modal-body">
-
-          <div class="form-group">
-            <label for="nom">Nom</label>
-            <input type="text" class="form-control" id="nom" placeholder="Nom du responsable"
-                   name="prenom"
-                   [(ngModel)]="responsableModel.nom"
-                   #nom="ngModel"
-                   [ngClass]="{'is-invalid':ff.submitted && nom.invalid}"
-                   required>
-            <div *ngIf="ff.submitted && nom.invalid" class="invalid-input">
-              <div *ngIf="nom.errors?.required">Le nom est invalid</div>
+      <div class="modal-body">
+        <form #fsaveRespoTheme="ngForm" name="formRT" (submit)="fsaveRespoTheme.form.valid && saveResponsableTheme()"
+              novalidate action="">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="nomRespoTheme">Nom</label>
+              <input type="text"
+                     class="form-control"
+                     placeholder="Nom"
+                     id="nomRespoTheme"
+                     name="nomRespoTheme"
+                     [(ngModel)]="responsableModel.nom"
+                     #nomRespoTheme="ngModel"
+                     [ngClass]="{'is-invalid': fsaveRespoTheme.submitted && nomRespoTheme.invalid}"
+                     required/>
+              <div *ngIf="fsaveRespoTheme.submitted && nomRespoTheme.invalid" class="invalid-input">
+                <div *ngIf="nomRespoTheme.errors?.required">Le nom est invalid</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="prenomRespoTheme">Prénom</label>
+              <input type="text"
+                     class="form-control"
+                     placeholder="Prénom"
+                     id="prenomRespoTheme"
+                     name="prenomRespoTheme"
+                     [(ngModel)]="responsableModel.prenom"
+                     #prenomRespoTheme="ngModel"
+                     [ngClass]="{'is-invalid': fsaveRespoTheme.submitted && prenomRespoTheme.invalid}"
+                     required/>
+              <div *ngIf="fsaveRespoTheme.submitted && prenomRespoTheme.invalid" class="invalid-input">
+                <div *ngIf="prenomRespoTheme.errors?.required">Le prénom est invalid</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mailRespoTheme">Mail</label>
+              <input type="text"
+                     class="form-control"
+                     placeholder="adresse mail"
+                     id="mailRespoTheme"
+                     name="mailRespoTheme"
+                     [(ngModel)]="responsableModel.email"
+                     #mailRespoTheme="ngModel"
+                     [ngClass]="{'is-invalid': fsaveRespoTheme.submitted && mailRespoTheme.invalid}"
+                     required/>
+              <div *ngIf="fsaveRespoTheme.submitted && mailRespoTheme.invalid" class="invalid-input">
+                <div *ngIf="mailRespoTheme.errors?.required">L'adresse mail est invalid</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="descriptionRespoTheme">Description du thème</label>
+              <textarea
+                class="form-control"
+                id="descriptionRespoTheme" rows="3"
+                name="descriptionRespoTheme"
+                [(ngModel)]="responsableModel.description"
+                #descriptionRespoTheme="ngModel"
+                [ngClass]="{'is-invalid': fsaveRespoTheme.submitted && descriptionRespoTheme.invalid}"
+                required></textarea>
+              <div *ngIf="fsaveRespoTheme.submitted && descriptionRespoTheme.invalid" class="invalid-input">
+                <div *ngIf="descriptionRespoTheme.errors?.required">La description est invalid</div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="prenom">Prénom</label>
-            <input type="text" class="form-control" id="prenom" placeholder="Prénom du responsable"
-                   name="prenom"
-                   [(ngModel)]="responsableModel.prenom"
-                   #prenom="ngModel"
-                   [ngClass]="{'is-invalid':ff.submitted && prenom.invalid}"
-                   required>
-            <div *ngIf="ff.submitted && prenom.invalid" class="invalid-input">
-              <div *ngIf="prenom.errors?.required">Le prénom est invalid</div>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer le responsable</button>
           </div>
-          <div class="form-group">
-            <label for="email">Adresse mail</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                   placeholder="Adresse email du responsable"
-                   name="email"
-                   [(ngModel)]="responsableModel.email"
-                   #email="ngModel"
-                   [ngClass]="{'is-invalid':ff.submitted && email.invalid}"
-                   required>
-            <div *ngIf="ff.submitted && email.invalid" class="invalid-input">
-              <div *ngIf="email.errors?.required">L'adresse mail est invalid</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description du Responsable</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description du Responsable"
-                      name="description"
-                      [(ngModel)]="responsableModel.description"
-                      #description="ngModel"
-                      [ngClass]="{'is-invalid':ff.submitted && description.invalid}"
-                      required></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-primary">Enregistrer Responsable</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>

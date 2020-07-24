@@ -12,7 +12,7 @@ enum Sexe {
 export interface Utilisateur {
   id: number;
   nom: string;
-  prenom: string;
+  prenom: any;
   email: string;
   telephone: string;
   dateNaissance: any;

@@ -4,7 +4,7 @@ import {StatutEval} from "./statu-eval.enum";
 
 export class Evaluation {
   idEvaluation: number;
-  typeEvaluation: TypeEvaluation;
+  typeEvaluation: string;
   total: number;
   //statut: StatutEval;
   dateCreation: Date;
@@ -12,5 +12,7 @@ export class Evaluation {
   user: Utilisateur;
   intitule: string;
   totalObtenu: number;
-  statut: StatutEval;
+  statut: string;
+  tempsEvaluation: number;
+  tempsApprenant: number;
 }

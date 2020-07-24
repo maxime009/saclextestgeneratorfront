@@ -8,20 +8,23 @@ import {Utilisateur} from '../../models/utilisateur';
   templateUrl: './une-evaluation.component.html',
   styleUrls: ['./une-evaluation.component.css']
 })
+
+
 export class UneEvaluationComponent implements OnInit {
 
   @Input() evaluation: Evaluation;
   @Input() listEqr: EvalQuestRep[];
   @Input() moi: Utilisateur;
   pourcentageReussite: any;
-
-  constructor() { }
-
+  reussi = 'Reussi';
+  echoue = 'Echoue';
+  name = 'World';
   ngOnInit(): void {
     // this.pourcentageReussite = (this.evaluation.totalObtenu / this.evaluation.total) * 100;
     console.log(this.pourcentageReussite);
     console.log(this.listEqr);
     console.log(this.evaluation);
   }
+
 
 }

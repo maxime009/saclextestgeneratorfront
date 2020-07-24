@@ -1,0 +1,87 @@
+<button (click)="initR()" type="button" class="btn btn-primary bordure" data-toggle="modal" data-target="#ajoutResponsableCat">
+  Ajouter un Responsable Categorie
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="ajoutResponsableCat" tabindex="-1" role="dialog" aria-labelledby="ajoutResponsableModalCatLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ajoutThemeModalCatLabel">Ajouter un Responsable de catégorie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeAddRespoCModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #fsaveRespoCategorie="ngForm" name="formRT" (submit)="fsaveRespoCategorie.form.valid && saveResponsableCategorie()"
+              novalidate action="">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="nomRespoTheme">Nom</label>
+              <input type="text"
+                     class="form-control"
+                     placeholder="Nom"
+                     id="nomRespoTheme"
+                     name="nomRespoTheme"
+                     [(ngModel)]="responsableCModel.nom"
+                     #nomRespoCategorie="ngModel"
+                     [ngClass]="{'is-invalid': fsaveRespoCategorie.submitted &&nomRespoCategorie.invalid}"
+                     required/>
+              <div *ngIf="fsaveRespoCategorie.submitted &&nomRespoCategorie.invalid" class="invalid-input">
+                <div *ngIf="nomRespoCategorie.errors?.required">Le nom est invalid</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="prenomRespoCategorie">Prénom</label>
+              <input type="text"
+                     class="form-control"
+                     placeholder="Prénom"
+                     id="prenomRespoCategorie"
+                     name="prenomRespoCategorie"
+                     [(ngModel)]="responsableCModel.prenom"
+                     #prenomRespoCategorie="ngModel"
+                     [ngClass]="{'is-invalid': fsaveRespoCategorie.submitted && prenomRespoCategorie.invalid}"
+                     required/>
+              <div *ngIf="fsaveRespoCategorie.submitted && prenomRespoCategorie.invalid" class="invalid-input">
+                <div *ngIf="prenomRespoCategorie.errors?.required">Le prénom est invalid</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mailRespoCategorie">Mail</label>
+              <input type="text"
+                     class="form-control"
+                     placeholder="adresse mail"
+                     id="mailRespoCategorie"
+                     name="mailRespoCategorie"
+                     [(ngModel)]="responsableCModel.email"
+                     #mailRespoCategorie="ngModel"
+                     [ngClass]="{'is-invalid': fsaveRespoCategorie.submitted && mailRespoCategorie.invalid}"
+                     required/>
+              <div *ngIf="fsaveRespoCategorie.submitted && mailRespoCategorie.invalid" class="invalid-input">
+                <div *ngIf="mailRespoCategorie.errors?.required">L'adresse mail est invalid</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="descriptionRespoCategorie">Description du thème</label>
+              <textarea
+                class="form-control"
+                id="descriptionRespoCategorie" rows="3"
+                name="descriptionRespoCategorie"
+                [(ngModel)]="responsableCModel.description"
+                #descriptionRespoCategorie="ngModel"
+                [ngClass]="{'is-invalid': fsaveRespoCategorie.submitted && descriptionRespoCategorie.invalid}"
+                required></textarea>
+              <div *ngIf="fsaveRespoCategorie.submitted && descriptionRespoCategorie.invalid" class="invalid-input">
+                <div *ngIf="descriptionRespoCategorie.errors?.required">La description est invalid</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer le responsable</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

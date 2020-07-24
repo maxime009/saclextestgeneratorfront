@@ -1,7 +1,9 @@
 import {EvalQuestRep} from "./eval-quest-rep";
 import {Reponse} from "./reponse";
+import {Evaluation} from './evaluation';
 
 export class ResultatEvaluation {
-  eqr: EvalQuestRep[] = new Array(0);
-  reponses: Reponse[];
+  evalQuestReps: EvalQuestRep[] = new Array(0);
+  evaluation: Evaluation;
+  //reponses: Reponse[];
 }

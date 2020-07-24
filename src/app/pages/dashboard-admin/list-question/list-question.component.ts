@@ -3,6 +3,7 @@ import {Question} from '../../../models/question';
 import {Reponse} from '../../../models/reponse';
 import {StgService} from '../../../appl/stg.service';
 import {Categorie} from '../../../models/categorie';
+import {Difficulte} from '../../../models/difficulte.enum';
 
 @Component({
   selector: 'app-list-question',
@@ -25,7 +26,11 @@ export class ListQuestionComponent implements OnInit {
   updateReponse: Reponse = null;
   questionModel: Question;
 
+  public niveauDifficulte = [];
+  difficultes = Difficulte;
   ngOnInit(): void {
+    this.niveauDifficulte = Object.keys(this.difficultes);
+
   }
 
   getQuestionParCategorie(){

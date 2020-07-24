@@ -1,6 +1,38 @@
 <div class="card">
   <div class="card-body">
-    <div class="row">
+    <div class="card-title">
+      <div class="row" style="margin-top: 12px">
+        <div class="col-4 text-center">
+          <div>Nom et prénom: {{moi.nom}} {{moi.prenom}}</div>
+          <div>Type de l'évaluation: {{evaluation.typeEvaluation}}</div>
+          <div>Catégorie: {{evaluation.intitule}}</div>
+          <div>Date: {{evaluation.dateCreation}}</div>
+        </div>
+        <div class="col-4 text-center" style="margin-bottom: 45px">
+          <img src="../../../assets/image/urxLogo.jpg" class="rounded" style=" height: 120px; width: 185px;" alt="">
+        </div>
+        <div class="col-4 text-center">
+          <div style="display: block"><div style="display: inline-block">Nombre de questions: </div><div style="display: inline-block;" *ngIf="listEqr">{{listEqr.length}}</div></div>
+          <div>Note obtenue: {{evaluation.totalObtenu}}/{{evaluation.total}}</div>
+          <div>Temps pour évaluation: {{evaluation.tempsEvaluation}} secondes</div>
+          <div>Temps réalisé: {{evaluation.tempsApprenant}} secondes</div>
+        </div>
+      </div>
+      <div class="text-center">
+        <div>Pourcentage de réussite: {{(evaluation.totalObtenu/evaluation.total)*100}}%</div>
+        <div>Temps moyen par question: {{(evaluation.tempsEvaluation/listEqr.length)}} secondes</div>
+        <div style="display: block"><div style="display: inline-block">Statut: </div>
+          <div style="display:inline-block;">
+            <div *ngIf="evaluation.statut == reussi"
+                 style="color: green; font-weight: bold">{{evaluation.statut}}</div>
+            <div *ngIf="evaluation.statut == echoue"
+                 style="color: red; font-weight: bold">{{evaluation.statut}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="row">
       <div class="col-6">
         <div>Nom et prénom: {{moi.nom}} {{moi.prenom}}</div>
         <div>Type de l'évaluation: {{evaluation.typeEvaluation}}</div>
@@ -10,11 +42,95 @@
       <div class="col-6">
         <div>Total: {{evaluation.total}}</div>
         <div>Total obtenue: {{evaluation.totalObtenu}}</div>
-        <div>Pourcentage de réussite: {{pourcentageReussite}}</div>
+        <div>Pourcentage de réussite: {{(evaluation.totalObtenu/evaluation.total)*100}}%</div>
         <div>Statut: {{evaluation.statut}}</div>
       </div>
-    </div>
-    <div *ngFor="let eqr of listEqr">
+    </div>-->
+
+    <table class="table table-hover table-bordered bg-light text-center">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Temps de la question</th>
+        <th scope="col">Temps mis sur la question</th>
+        <th scope="col">Points de la question</th>
+        <th scope="col">Points obtenus</th>
+        <th scope="col">Statut</th>
+        <th scope="col">Réponses</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let l of listEqr">
+        <th scope="row">{{listEqr.indexOf(l)}}</th>
+        <td>{{l.quest.duree}}</td>
+        <td>{{l.tempsMis}}</td>
+        <td>{{l.quest.score}}</td>
+        <td>
+          <div *ngIf="l.statut == reussi">{{l.quest.score}}</div>
+          <div *ngIf="l.statut == echoue">0</div>
+        </td>
+        <td>
+          <div *ngIf="l.statut == reussi" style="color: green; font-weight: bold">{{l.statut}}</div>
+          <div *ngIf="l.statut == echoue" style="color: red; font-weight: bold">{{l.statut}}</div>
+        </td>
+        <td>
+              <a data-toggle="modal" [href]="'#modalReponses' + l.id"><i class="fa fa-eye"></i>
+              </a>
+              <!-- Modal -->
+              <div class="modal fade" id="modalReponses" tabindex="-1" role="dialog" aria-labelledby="modalReponsesLabel" aria-hidden="true" [id]="'modalReponses'+ l.id">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title text-center" id="modalReponsesLabel">Réponse</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"  #closeAddExpenseModal>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="card-body">
+                      <div class="h5">Réponses de la question</div>
+                      <table class="table table-hover table-bordered bg-light">
+                        <thead>
+                        <tr>
+                          <th scope="col">Réponse</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Valeur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let repo of l.quest.reponses">
+                          <td>{{repo.libelle}}</td>
+                          <td>{{repo.description}}</td>
+                          <td>{{repo.valeur}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="h5">Vos réponses</div>
+                      <table class="table table-hover table-bordered bg-light">
+                        <thead>
+                        <tr>
+                          <th scope="col">Réponse</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Valeur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let repo of l.repEval">
+                          <td>{{repo.rep.libelle}}</td>
+                          <td>{{repo.rep.description}}</td>
+                          <td>{{repo.rep.valeur}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <!--<div *ngFor="let eqr of listEqr">
       <div class="accordion" id="accordionExample">
         <div class="card">
           <div class="card-header" id="headingOne">
@@ -22,7 +138,7 @@
               <a class="btn btn-link btn-block text-left" type="button" [href]="'#collapseOne' + eqr.id"
                       data-toggle="collapse" aria-expanded="false"
                       aria-controls="collapseOne">
-                {{eqr.quest.libelle}}
+                {{eqr.quest.libelle}}{{eqr.tempsMis}}
               </a>
             </h2>
           </div>
@@ -49,7 +165,7 @@
               </table>
             </div>
             <div class="col-6">
-              <div class="h6 text-center">Response soumis par vous</div>
+              <div class="h6 text-center">Vos</div>
               <table class="table table-hover table-bordered bg-light">
                 <thead>
                 <tr>
@@ -72,7 +188,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </div>
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

@@ -150,11 +150,14 @@
                       <div *ngIf="description.errors?.required">La description est invalid</div>
                     </div>
                   </div>
-                  <div>Responsable Actuel : {{themeModif.utilisateur.nom}}{{themeModif.utilisateur.prenom}}</div>
+                  <div style="display: block">
+                    <div style="display: inline-block">Responsable Actuel : </div>
+                    <div style="display: inline-block" *ngIf="themeModif.utilisateur">{{themeModif.utilisateur.nom}}{{themeModif.utilisateur.prenom}}</div>
+                  </div>
                   <div class="form-group">
                     <label for="responsableThemeModif"></label>
                     <select name="responsableThemeModif" id="responsableThemeModif" [(ngModel)]="themeModif.utilisateur" #responsableTheme="ngModel" >
-                      <option [ngValue]="themeModif.utilisateur">{{themeModif.utilisateur.nom}} {{themeModif.utilisateur.prenom}}</option>
+                      <option [ngValue]="themeModif.utilisateur" *ngIf="themeModif.utilisateur">{{themeModif.utilisateur.nom}} {{themeModif.utilisateur.prenom}}</option>
                       <option *ngFor="let respo of responsablesTheme" [ngValue]="respo">{{respo.nom}} {{respo.prenom}}</option>
                     </select>
                   </div>

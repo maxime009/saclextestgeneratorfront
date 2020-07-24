@@ -6,6 +6,7 @@ import {Reponse} from '../../../models/reponse';
 import {ReponseEval} from '../../../models/reponse-eval';
 import {FormGroup} from '@angular/forms';
 import {EvaluationService} from '../../../appl/evaluation.service';
+import {ResultatEvaluation} from '../../../models/resultat-evaluation';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class DisplayQCMComponent implements OnInit {
     eval: null,
     quest: this.questionModel,
     statut: null,
-    tempMis: null,
+    tempsMis: 0,
     repEval: null
   };
   e: EvalQuestRep = {
@@ -53,7 +54,7 @@ export class DisplayQCMComponent implements OnInit {
     eval: null,
     quest: this.questionModel,
     statut: null,
-    tempMis: null,
+    tempsMis: 0,
     repEval: null
   };
 
@@ -63,7 +64,7 @@ export class DisplayQCMComponent implements OnInit {
     reponses : null
   };
   @Output() initQuestionReponses: EventEmitter<any> = new EventEmitter();
-  @Output() sendResultat = new EventEmitter<EvalQuestRep>();
+  @Output() sendResultat = new EventEmitter<ResultatEvaluation>();
   @Input() temps: number;
   @Input() questionActu: number;
   show = false;
@@ -81,35 +82,40 @@ export class DisplayQCMComponent implements OnInit {
   duree = 0;
   dureeSup = 0;
   tempsTotal = 0;
-  resultat: any;
+  resultat: ResultatEvaluation;
 
   ngOnInit(): void {
   }
 
   nextQuestion() {
+    this.questionReponses[this.questionActu].eqr.tempsMis =  this.duree + this.dureeSup;
+    console.log(this.questionReponses[this.questionActu].eqr.tempsMis);
+    this.duree = 0;
+    this.dureeSup = 0;
     this.show = false;
     for (let i = 0; i < this.questionReponse.eqr.quest.reponses.length; i++) {
       if (this.questionReponse.eqr.quest.reponses[i].choisi) {
         const repEval = new ReponseEval();
         repEval.evalId = this.questionReponse.eqr;
         repEval.rep = this.questionReponse.eqr.quest.reponses[i];
-        console.log(repEval);
         this.questionReponses[this.questionActu].reponses.push(repEval);
       }
     }
-    console.log(this.questionReponses);
     this.questionActu += 1;
     // this.questionReponse = this.questionReponses[this.questionActu];
     if (this.questionActu === this.questionReponses.length){
-      alert('vous êtes à la derniere question');
-      this.questionActu -= 1;
+      this.endExam();
+      /*alert('vous êtes à la derniere question');
+      this.questionActu -= 1;*/
     } else {
        this.questionReponse = this.questionReponses[this.questionActu];
        this.questionReponse.eqr.quest.reponses = DisplayQCMComponent.shufleRep(this.questionReponse.eqr.quest.reponses);
      }
+    // this.ngOnInit();
   }
 
   previousQuestion() {
+
     for (let i = 0; i < this.questionReponse.eqr.quest.reponses.length; i++) {
       if (this.questionReponse.eqr.quest.reponses[i].choisi) {
         const repEval = new ReponseEval();
@@ -118,7 +124,7 @@ export class DisplayQCMComponent implements OnInit {
         this.questionReponses[this.questionActu].reponses.push(repEval);
       }
     }
-
+    console.log(this.questionReponses);
     this.questionActu -= 1;
 
     if (this.questionActu < 0) {
@@ -131,9 +137,10 @@ export class DisplayQCMComponent implements OnInit {
   }
 
   endExam() {
-    this.tempsTotal = this.duree + this.dureeSup;
+    // this.tempsTotal = this.duree + this.dureeSup;
     this.evaluationService.correction(this.questionReponses).subscribe(
       res => {
+        console.log(res);
         this.resultat = res;
         console.log(this.resultat);
         this.questionReponses = new Array(0);

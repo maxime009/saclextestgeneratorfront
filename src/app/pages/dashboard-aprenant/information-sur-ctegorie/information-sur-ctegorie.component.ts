@@ -28,7 +28,9 @@ export class InformationSurCtegorieComponent implements OnInit {
     user: null,
     intitule: null,
     totalObtenu: null,
-    statut: null
+    statut: null,
+    tempsEvaluation: null,
+    tempsApprenant: null
   };
 
 

@@ -1,14 +1,14 @@
 <!--<div>
   <ngx-counter [countValue]=duree  [limit]=temps font="cursive" theme="green"></ngx-counter>
 </div>-->
-<div>
-  <ngx-counter [(ngModel)]="duree"  [limit]=temps font="cursive" theme="green"></ngx-counter>
-</div>
-<div *ngIf="duree == temps">
-<!--
-  {{endExam()}}
--->
-  <ngx-counter [countValue]=dureeSup  [limit]=7200 font="cursive" theme="green"></ngx-counter>
+<div style="display: block">
+  <div style="display: inline-block;" *ngIf="questionReponse.eqr.quest.duree">
+    <ngx-counter [(ngModel)]="duree" [limit]=questionReponse.eqr.quest.duree font="cursive" theme="green"></ngx-counter>
+  </div>
+  <div *ngIf="duree == questionReponse.eqr.quest.duree" style="display: inline-block;">
+
+    <ngx-counter [(ngModel)]=dureeSup [limit]=7200 font="cursive" theme="red"></ngx-counter>
+  </div>
 </div>
 <form name="form" novalidate>
   <div class="form-group" style="background-color: white">

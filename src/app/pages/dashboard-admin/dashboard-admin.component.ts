@@ -5,6 +5,7 @@ import {CategorieService} from '../../appl/categorie.service';
 import {Categorie} from '../../models/categorie';
 import {StgService} from '../../appl/stg.service';
 import {Question} from '../../models/question';
+import {Utilisateur} from '../../models/utilisateur';
 
 
 @Component({
@@ -24,12 +25,16 @@ export class DashboardAdminComponent implements OnInit {
   themeChoisi2: Theme;
   categorieChoisi2: Categorie;
   listeDeQuestion: Question[] = new Array(0);
+  responsablesTheme: Utilisateur[] = new Array(0);
 
   constructor(private themeService: ThemeService,
               private categorieService: CategorieService,
               private stgService: StgService) {}
   ngOnInit(): void {
     this.getThemes();
+    // this.getResponsablesTheme();
+    console.log(this.responsablesTheme);
+    console.log(this.themes);
   }
 
   public getThemes(){
@@ -90,6 +95,17 @@ afficherListQuestion(){
       },
       err => {
         alert('error gettx questions');
+      }
+    );
+  }
+
+  getResponsablesTheme() {
+    this.stgService.getRespoTheme().subscribe(
+      res => {
+        this.responsablesTheme = res;
+      },
+      err => {
+        alert('Une erreur est survnue');
       }
     );
   }

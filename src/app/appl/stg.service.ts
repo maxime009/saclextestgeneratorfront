@@ -17,13 +17,14 @@ import {Reponse} from '../models/reponse';
 export class StgService {
 
   public base = 'http://localhost:8088/';
-  //private listTheme = this.base + 'listerTheme';
+  // private listTheme = this.base + 'listerTheme';
   private conne = this.base + 'login';
-    //this.base + 'login';
-  private addRespo = this.base + 'admin/creerUtilisateur';
-  private listUser = this.base + 'admin/listerUtilisateur';
-  private deleteUser = this.base + 'admin/supprimerUtilisateur/';
-  private modofyAccount = this.base + 'modifierUtilisateur'; // probleme avec cette fxn l'id
+    // this.base + 'login';
+  private addRespoTheme = this.base + 'utilisateur/creerUtilisateur';
+  private addRespoCategorie = this.base + 'utilisateur/creerRespCategorie';
+  private listUser = this.base + 'utilisateur/listerUtilisateur';
+  private deleteUser = this.base + 'utilisateur/supprimerUtilisateur/';
+  private modifyAccount = this.base + 'utilisateur/modifierUtilisateur';
   private unUser = this.base + 'utilisateur/UnUtilisateur/';
   /*private listCategorieParTheme = this.base + 'listerCategoriesparTheme';
   private nbCategorieParTheme = this.base + 'categoriesParTheme/';
@@ -34,9 +35,10 @@ export class StgService {
   // private saveUtilisateur = this.base + 'all/creerUtilisateur';
   // private saveUtilisateur = 'http://localhost:8086/all/creerUtilisateur';
   private saveApprenant = this.base + 'all/creerApprenant';
-  //private delTheme = this.base + 'admin/supprimerTheme/';
+  // private delTheme = this.base + 'admin/supprimerTheme/';
   // TODO create method to save responsable
-  private listRespo = this.base + '';
+  private listRespoTheme = this.base + 'utilisateur/listerResponsableTheme';
+  private listRespoCatgeorie = this.base + 'utilisateur/listerResponsableCategorie';
   // TODO create method to list responsable && call on html in *ngFor && charge it also on theme for addix theme
   // TODO FAIRE LES TOFS DES EVALUATIONS
   private addQuest = this.base + 'question/creerQuestion';
@@ -97,12 +99,21 @@ export class StgService {
     return this.http.post<Utilisateur>(this.saveApprenant, user);
   }
 
-  saveRespo(responsable: Utilisateur): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(this.addRespo, responsable);
+  saveRespoTheme(responsable: Utilisateur): Observable<Utilisateur> {
+    console.log(responsable);
+    return this.http.post<Utilisateur>(this.addRespoTheme, responsable);
+  }
+  
+  saveRespoCategorie(responsableC: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(this.addRespoCategorie, responsableC);
   }
 
-  getRespo(): Observable<Utilisateur[]> {
-    return this.http.get<Utilisateur[]>(this.listRespo);
+  getRespoTheme(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.listRespoTheme);
+  }
+
+  getRespoCategorie(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.listRespoCatgeorie);
   }
 
 

@@ -33,11 +33,11 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="description">Description du thème</label>
+                <label for="descriptionadd">Description du thème</label>
                 <textarea
                   class="form-control"
-                  id="description" rows="3"
-                  name="libelle"
+                  id="descriptionadd" rows="3"
+                  name="descriptionadd"
                   [(ngModel)]="themeModel.description"
                   #description = "ngModel"
                   [ngClass]="{'is-invalid': ff.submitted && description.invalid}"

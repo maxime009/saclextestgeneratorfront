@@ -40,10 +40,9 @@
                  required>
         </div>
         <div class="form-group col-lg-4 col-md-4 col-sm-12">
-          <label for="difficulte">Difficulté</label>
+          <label for="difficulte">Difficulté :</label>
           <select [(ngModel)]="questionModel.difficulte" name="difficulte" id="difficulte" #difficulte="ngModel">
             <option *ngFor="let key of niveauDifficulte" [value]="key" [label]="difficultes[key]"></option>
-<!--            <option *ngFor="let difficulte of niveauDifficulte" [value]="difficulte">{{difficulte}}</option>-->
           </select>
         </div>
       </div>

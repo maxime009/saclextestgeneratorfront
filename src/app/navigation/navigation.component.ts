@@ -35,6 +35,7 @@ export class NavigationComponent implements OnInit {
   id: any;
   i: number;
   m: boolean;
+  start = 15;
 
 
 
